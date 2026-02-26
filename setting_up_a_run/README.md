@@ -8,15 +8,15 @@ in MeerKAT+ science comissioing.
 
 - User directory:
 
-      /bEDD/u
+    /bEDD/u
 
 - Container directory:
 
-     /bEDD/MPLUS-CONTAINER
+    /bEDD/MPLUS-CONTAINER
 
 - Raw data directory:
 
-	/bEDD/MPLUS-DATA
+    /bEDD/MPLUS-DATA
 
 
 ## A simple setup to submit a job via esched
