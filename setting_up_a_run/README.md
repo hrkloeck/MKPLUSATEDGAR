@@ -55,7 +55,7 @@ mkdir -p ${USER}/.casa/data
 ```
 
 
-- In the directory there are two files:
+- Setting up the scripts
 
 	run_example.sh (you need to edit this)
 
@@ -107,6 +107,9 @@ Some usefull commands:
 
 		condor_submit -interactive
 
+- get resource info
+
+		condor_status
 
 ## Add additional packages 
 
