@@ -1,0 +1,471 @@
+Bootstrap: docker
+From: ubuntu:25.10
+
+%labels
+    Author Hans-Rainer Kloeckner (MPIfR)
+    Version v02.2026
+    Description "Ubuntu 25 virtualenv and radio astro stuff"
+
+%environment
+    export DEBIAN_FRONTEND=noninteractive
+    export LC_ALL=C.UTF-8
+    export LANG=C.UTF-8
+    export MPLBACKEND=Agg
+    export CC=/usr/bin/gcc-15
+    export CXX=/usr/bin/g++-15
+    export LD_LIBRARY_PATH=/opt/nonsystem_python/lib/:/opt/meersoft/wsclean/lib/:$LD_LIBRARY_PATH
+    export PATH=/opt/meersoft/wsclean/bin/:$PATH
+    export pyv_downloadversion=3.12.4
+    export PYTHONPATH=/opt/venviron/py_venv/lib/python${pyv_downloadversion}/site-packages
+    export BOOST_ROOT=/usr/local/include
+    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
+
+%files
+    tricolour.yaml /opt/meersoft/yaml/
+    tricolour_oxkat.yaml /opt/meersoft/yaml/
+
+%post -c /bin/bash
+
+    #set -e
+    
+    # needs tp be set otherwise the intereactive time setting 
+    # will ask for input
+    #
+    export DEBIAN_FRONTEND=noninteractive
+
+    # define the number of processors cores availible
+    # -note nproc > 1 does not compile on pc28007
+    #  seems to be some umask setting problem
+    #
+    export nproc=4
+
+    # Define the CC compiler  
+    #
+    export CC=/usr/bin/gcc-15
+    export CXX=/usr/bin/g++-15
+
+    # ##########################################
+    #
+    # define the python version to be installed in the virtual environment
+    #
+    # check availible versions: https://www.python.org/ftp/python/
+    #
+    # tested with 3.8.16 will use numpy 1.1
+    # tested with 3.12.4 will use numpy 2.3.5
+    #
+    # define the version to download
+    #
+    export pyv_downloadversion=3.12.4
+    #
+    # define the python name
+    #
+    export pyv_nonsystem=3.12
+    #
+    # ##########################################
+	
+    echo "Setting up the system..."
+    
+    apt-get update && apt-get install -y -q \
+        build-essential \
+	autotools-dev \
+	software-properties-common \
+	ca-certificates \
+        g++-15 \
+	gfortran \
+        cmake \
+	openmpi-bin \
+        python3 \
+        python3-dev \
+        python3-pip \
+	python3-venv \
+	python3-openssl \
+	libpython3-dev \
+	libreadline-dev \
+	libsqlite3-dev \
+	libncurses5-dev \
+	libncursesw5-dev \
+	libgdbm-dev \
+	libnss3-dev \
+	libffi-dev \
+	liblzma-dev \
+	libssl-dev \
+	libbz2-dev \
+        libfreetype-dev \
+        libpng-dev \
+	libblas-dev \
+	libicu-dev \
+	libcfitsio-dev \
+	libfftw3-dev \
+	libgsl-dev \
+	libhdf5-serial-dev \
+	libhdf5-dev \
+	liblapack-dev \
+	libopenmpi-dev \
+	libstdc++6 \
+	zlib1g-dev \
+	wcslib-dev \
+	xz-utils \
+	tk-dev \
+	wget \
+	llvm \
+        git \
+        curl \
+	pkg-config \
+	bison \
+	flex \
+	pip 
+    
+    # ########## GENERAL SOFTWARE FROM SOURCECODE
+    #
+    #
+    #
+
+    # -----  Install non-system python version
+    #
+    # - this is needed because the Ubunto distribution 
+    #   does come only with a limited set of python versions
+    # - the python will be installed under /opt/nonsystem_python
+    #   with the version number (CAUTION the system version is also included)
+    # - Note this will not be installed system wide instead 
+    #   virtualenv will be pointed towards it
+    # - make -j $nproc for nproc > 1 will crash on pc28007 use 1 for testing
+    # - configure --enable-optimizations --enable-shared will generate dynamic
+    #   libraries (.so) instead of (.a) 
+    #
+    echo "Installing non system python version"${pyv_nonsystem}
+
+    mkdir /opt/nonsystem_python && \
+    chmod -R 777 /opt/nonsystem_python && \
+    mkdir /opt/nonsystem_python_build && \
+    chmod -R 777 /opt/nonsystem_python_build && \
+    cd /opt/nonsystem_python_build && \
+    wget https://www.python.org/ftp/python/${pyv_downloadversion}/Python-${pyv_downloadversion}.tgz && \
+    tar -xf Python-${pyv_downloadversion}.tgz && \
+    cd Python-${pyv_downloadversion} && \
+    ./configure --enable-optimizations --enable-shared --prefix=/opt/nonsystem_python && \
+    make -j $nproc && \
+    make install 
+    #
+    #
+    # make sure that the python3 call works via: 
+    # /opt/nonsystem_python/bin/python3
+    #
+    export LD_LIBRARY_PATH=/opt/nonsystem_python/lib/:$LD_LIBRARY_PATH
+    #
+    /opt/nonsystem_python/bin/pip3 install pybind11[global]
+    #
+    # ##########
+
+
+    # ----- Install boost
+    #
+    # https://archives.boost.io/release/
+    # https://www.boost.org/doc/libs/1_88_0/libs/libraries.htm#Category
+    #
+    # Notes:
+    #  - boost will be installed at the default location 
+    #  - with 1.79.0 compiled
+    #  - with 1.88.0 compiled
+    #  - CAUTION: Somehow there something strange in the installation
+    #    if you specify --with-python NONE of the other lib required
+    #    by casacore and wsclean are produced, unless explicitly name
+    #    them
+    #
+    export BO_VERSION=1.88.0
+    export BO_VERSION_TEXT=1_88_0
+    #
+    export Boost_NO_SYSTEM_PATHS=TRUE
+    #
+    #
+    cd / && \
+    wget --no-check-certificate https://archives.boost.io/release/${BO_VERSION}/source/boost_${BO_VERSION_TEXT}.tar.bz2 && \
+    tar xvf boost_${BO_VERSION_TEXT}.tar.bz2 && \
+    cd boost_${BO_VERSION_TEXT} && \
+    bash bootstrap.sh --with-python=/opt/nonsystem_python/bin/python${pyv_nonsystem} --with-python-root=/opt/nonsystem_python && \
+    ./b2 install --with=all --with-python --build-type=complete --layout=versioned --with-date_time --with-thread --with-system \
+    --with-filesystem --with-program_options -j $nproc && \
+    cd && / 
+    #
+    export BOOST_ROOT=/usr/local/include/
+    export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+    export CPLUS_INCLUDE_PATH=/usr/local/include:$CPLUS_INCLUDE_PATH
+    #
+    # ##########
+
+    #
+    #
+    #
+    # #######################################################
+
+
+    # ########## VIRTUAL PYTHON ENVIRONMENT
+    #
+    #
+    #
+
+    # ----- Install software via pip to prepare a virtual environment
+    #
+    # install virtualenv on the system (force this)
+    #
+    python3 -m pip install --break-system-packages virtualenv 
+    #
+    # ##########
+
+
+    # -----  Setting up a virtual environment 
+    #
+    # setting up a virtual environment
+    #  - use virtualenv for this (installed in the system python)
+    #  - pipe the activate mechanism into singularity to be activated on
+    #    singularity execution
+    #
+    echo "Setting up virtual environment ..."
+    #
+    mkdir /opt/venviron && \
+    chmod -R 777 /opt/venviron && \
+    cd /opt/venviron && \
+    virtualenv -p /opt/nonsystem_python/bin/python3 py_venv && \
+    source /opt/venviron/py_venv/bin/activate && \
+    echo "source /opt/venviron/py_venv/bin/activate" >> $SINGULARITY_ENVIRONMENT
+    #
+    #
+    export PYTHONPATH=/opt/venviron/py_venv/lib/python${pyv_downloadversion}/site-packages
+    #
+    # ##########
+
+
+    # ----- Install various packages in the virtual python environment
+    #
+    # Note:
+    #     - name it as: py_env 
+    #
+    echo "Install packages in the virtual environment ..."
+
+    # General tools to extract the package version
+    #
+    pip${pyv_nonsystem} install pipgrip pipdeptree 
+
+    # Packages needed for CASACORE and WSCLEAN
+    #
+    pip${pyv_nonsystem} install numpy pybind11[global]
+
+    #
+    # ##########
+
+
+    # ----- Install astro packages in the virtual python environment
+    #
+
+    # Install SHADEMS to optain most of the packages needed
+    # for the radio software packages
+    #
+    pip${pyv_nonsystem} install shadems
+
+    pip${pyv_nonsystem} install scipy
+
+    pip${pyv_nonsystem} install git+https://github.com/ratt-ru/tricolour.git
+
+    pip${pyv_nonsystem} install git+https://github.com/ska-sa/katbeam.git
+    
+    pip${pyv_nonsystem} install git+https://github.com/caracal-pipeline/crystalball.git    
+
+    pip${pyv_nonsystem} install codex-africanus[complete]
+
+    pip${pyv_nonsystem} install git+https://github.com/hrkloeck/daskmsASTROKIT.git
+   
+    pip${pyv_nonsystem} install regions
+    
+    pip${pyv_nonsystem} install shapely==2.0.6
+
+    pip${pyv_nonsystem} install numpyencoder
+
+    # installs pybdsf 
+    pip${pyv_nonsystem} install bdsf[ishell]
+
+    pip${pyv_nonsystem} install git+https://github.com/PaulHancock/Aegean.git
+
+    
+    # RATT / SARAO additional packages 
+    # https://github.com/orgs/ratt-ru/repositories
+    #
+    pip${pyv_nonsystem} install ragavi
+
+    # careful this stuff downloads some casatask etc
+    #
+    pip${pyv_nonsystem} install simms
+    
+    pip${pyv_nonsystem} install git+https://github.com/ratt-ru/CubiCal.git
+    
+    # Montage for
+    # https://github.com/Caltech-IPAC/Montage/tree/main/python/MontagePy
+    #
+    pip${pyv_nonsystem} install MontagePy
+
+    #
+    # Packages that do not install
+    #
+    # -  pip${pyv_nonsystem} install git+https://github.com/ska-sa/katsdpcal.git
+    #    This package needs python 2.7
+    #
+    #  - pip${pyv_nonsystem} install quartical
+    #
+    # ##########
+
+    # ----- Install CASA packages 
+    #
+    # https://casadocs.readthedocs.io/en/stable/notebooks/introduction.html#Modular-Packages
+    #
+    # the versions are tested for python3.12
+    #
+    pip${pyv_nonsystem} install casaconfig==1.4.0
+    
+    pip${pyv_nonsystem} install casatools==6.7.3.21
+   
+    pip${pyv_nonsystem} install casatasks==6.7.3.21
+    
+    pip${pyv_nonsystem} install casaplotms==2.8.2
+    
+    pip${pyv_nonsystem} install casaviewer==2.4.4
+    
+    pip${pyv_nonsystem} install casashell==6.7.3.21
+    
+    pip${pyv_nonsystem} install casaplotserver==2.0.3
+    
+    pip${pyv_nonsystem} install casatestutils==6.7.3.21
+    
+    pip${pyv_nonsystem} install casatablebrowser==0.0.40
+    
+    pip${pyv_nonsystem} install casalogger==1.0.23
+    
+    pip${pyv_nonsystem} install casafeather==0.0.27
+
+    pip${pyv_nonsystem} install casampi==0.5.9
+
+    #
+    # ##########
+
+
+    #
+    #
+    #
+    # #######################################################
+
+
+
+    # ########## ASTRO PACKAGES FROM SOURCE 
+    #
+
+    # ----- Install CASACORE
+    #
+    #
+    # Install casacore data
+    #
+    # Install WSRT Measures (extra casacore data, for tests)
+    # Note: The file on the ftp site is updated daily. When warnings regarding leap
+    # seconds appear, ignore them or regenerate the docker image.
+    # 
+    mkdir -p /opt/meersoft/casacoredata && \
+    cd /opt/meersoft/casacoredata && \
+    wget ftp://anonymous@ftp.astron.nl/outgoing/Measures/WSRT_Measures.ztar && \
+    tar xvf WSRT_Measures.ztar && \
+    rm WSRT_Measures.ztar
+
+    # Install casacore
+    #    
+    # https://github.com/casacore/casacore
+    #
+    mkdir /external && \
+    cd /external && \
+    git clone --depth 1 https://github.com/casacore/casacore.git && \
+    cd /external/casacore && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DBUILD_TESTING=OFF \
+     -DCMAKE_INSTALL_PREFIX=/opt/meersoft/casacore \
+     -DCMAKE_PREFIX_PATH=/usr/local/lib/cmake/Boost-${BO_VERSION} \
+     -DUSE_OPENMP=OFF \
+     -DUSE_HDF5=ON \
+     -DDATA_DIR=/opt/meersoft/casacoredata \
+     -DUSE_THREADS=ON \
+     -DBUILD_PYTHON3=ON \
+     -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
+     -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
+     -DPYTHON3_LIBRARY=/opt/nonsystem_python/lib \
+     -DCMAKE_POSITION_INDEPENDENT_CODE=ON && \
+    make -j $nproc && \
+    make install && \
+    cd /
+    #
+    #
+    export LD_LIBRARY_PATH=/opt/meersoft/casacore/lib/:$LD_LIBRARY_PATH
+    export PATH=/opt/meersoft/casacore/bin/:$PATH
+    #
+    # ##########
+
+
+    # -----  WSCLEAN
+    #
+    # https://gitlab.com/aroffringa/wsclean
+    # https://sourceforge.net/p/wsclean/wiki/Installation/
+    #
+    # install for different cpu architecture
+    # -DTARGET_CPU=skylake \
+    # ;/usr/local/lib/cmake/Boost-${BO_VERSION}
+    #
+    cd / && git clone https://gitlab.com/aroffringa/wsclean.git && \
+    cd wsclean && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
+       -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore \
+       -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
+       -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
+       -DPYTHON3_LIBRARY=/opt/nonsystem_python/lib \
+       -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+       -Dpybind11_DIR=/opt/venviron/py_venv/lib/python${pyv_nonsystem}/site-packages/pybind11/share/cmake/pybind11 && \
+    make -j $nproc && \
+    make install && \
+    cd /
+    #
+    #
+    export LD_LIBRARY_PATH=/opt/meersoft/wsclean/lib/:$LD_LIBRARY_PATH
+    export PATH=/opt/meersoft/wsclean/bin/:$PATH
+    #
+    # ##########
+
+    #
+    # #######################################################
+
+
+
+
+    # ########## ASTRO DATA and Information 
+    #
+
+    # -----  Get the LSM models from SARAO
+    #
+    cd /opt/meersoft/ && \
+    mkdir LSM && \
+    cd LSM && \
+    git clone https://github.com/ska-sa/katsdpcal.git && \
+    cp -fr katsdpcal/katsdpcal/conf/sky_models /opt/meersoft/LSM && \
+    cd /
+    #
+    # ##########
+
+
+    #
+    # #######################################################
+
+
+    # Delete some files etc.
+    #
+    echo "Cleaning up..."
+    
+    #   apt-get clean
+    rm -rf /var/lib/apt/lists/*
+    rm -rf /opt/nonsystem_python_build
+    rm -fr /wsclean
+    rm -fr /opt/meersoft/LSM/katsdpcal
+    rm -fr /boost_${BO_VERSION_TEXT}.tar.bz2
+    rm -fr /boost_${BO_VERSION_TEXT}
