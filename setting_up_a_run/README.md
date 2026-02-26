@@ -47,7 +47,7 @@ mkdir condor_logs
 ```
 
 ```
-THIS NEEDS TO DO THE CASA STUFF 
+mkdir -p ${USER}/.casa/data 
 ```
 
 
@@ -72,9 +72,17 @@ THIS NEEDS TO DO THE CASA STUFF
     [HTCondor](https://htcondor.readthedocs.io/en/latest/) and here is
     a nice tutorial [HTCondor users manual](https://htcondor.readthedocs.io/en/latest/users-manual/index.html)
 
+
+```
+condor_submit sub_run_example.sub
+```
+
+
+Some usefull commands:
+
 	submit a job
 	
-		condor_submit sub_job1.sub
+		condor_submit
 		
 	monitor the job
 	
