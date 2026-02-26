@@ -1,6 +1,10 @@
-# Setting up a singularity run 
+# Run a job on Edgar 
 
-The data structure on esched for MK+.
+Please note that this explanation is mainly for MPIfR people involved
+in MeerKAT+ science comissioing.
+
+
+## The data structure on esched for MK+ 
 
 - User directory:
 
@@ -17,7 +21,7 @@ The data structure on esched for MK+.
 
 ## A simple setup to submit a job via esched
 
-The job submission is via HTCondor. Please Do NOT run any job on the esched machine itself, always submit
+The job submission is via [HTCondor](https://htcondor.readthedocs.io/en/latest/). Please Do NOT run any job on the esched machine itself, always submit
 a job.
 
 
@@ -66,12 +70,15 @@ mkdir -p ${USER}/.casa/data
 
 
 
-- Submitting the job
+## Working on Edgar
 
-	The job submission on Edgar is organised via
-    [HTCondor](https://htcondor.readthedocs.io/en/latest/) and here is
-    a nice tutorial [HTCondor users manual](https://htcondor.readthedocs.io/en/latest/users-manual/index.html)
+The job submission to Edgar is organised via
+[HTCondor](https://htcondor.readthedocs.io/en/latest/) and here is
+a nice tutorial [HTCondor users
+manual](https://htcondor.readthedocs.io/en/latest/users-manual/index.html).
 
+
+- Submit a job (assuming you are logged on esched)
 
 ```
 condor_submit sub_run_example.sub
@@ -80,75 +87,44 @@ condor_submit sub_run_example.sub
 
 Some usefull commands:
 
-	submit a job
+- submit a job
 	
 		condor_submit
 		
-	monitor the job
+- monitor the job
 	
 		condor_q
 	
-    kill a job
+- kill a job
 	
 		condor_rm JOBID
 	
-	check on the submitted job meets the requirements
+- check on the submitted job meets the requirements
 	
 		condor_q -better-analyze <JOB ID>
 
+- start an interactive job
+
+		condor_submit -interactive
 
 
 ## Add additional packages 
 
-- make a directory 
+Here is an explanation to add 3rd hand software packages and run the
+singularity image.
+
+
+- get the depository of your 3rd hand software package
+
+As an example we use the source finding tools from Jonah.
 
 ```
-mkdir my_SING_BUILD
-cd my_SING_BUILD
-```
-
-- get the depository, either via git clone or download the source:
-
-```
-git clone https://github.com/hrkloeck/MKPLUSATEDGAR.git
-```
-
-- generate the singularity image on Edgar's esched entry machine.
-
-```
-cd MKPLUSATEDGAR/singularity
-```
-
-```
-singularity build --fakeroot MKPLUSATEDGAR.simg singularity.mkplus_full_022026
-```
-
-
-Notes:
-
-	- the container include some programms to extract the python
-	package libraries. 
-
-
-In case you run into problem
-
-
-
-
-
-The next steps are needed to setup a pseudo home directory for CASA, python, etc.
-
-```
-cd ../../
-mkdir -p ${USER}/.casa/data
-
-```
-
-Get some additional packages outside the singularity container 
-```
-git clone https://github.com/hrkloeck/DASKMSWERKZEUGKASTEN.git
-git clone https://github.com/hrkloeck/2GC.git
 git clone https://github.com/JonahDW/Image-processing.git
 ```
 
-Ok lets go and start.
+So you want to add to the package to the PYTHONPATH environment
+variable.
+
+singularity exec --bind ${PWD}:/WORK/ --env
+PYTHONPATH=/WORK/Image-processing:/opt/venviron/py_venv/lib/python3.12.4/site-packages
+MKPLUSATEDGAR.simg 
