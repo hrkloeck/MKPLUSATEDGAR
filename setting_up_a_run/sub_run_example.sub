@@ -1,5 +1,5 @@
 universe        = vanilla
-executable      = run_examples.sh
+executable      = run_example.sh
 arguments       =
 log             = condor_logs/run_example_$(Cluster)_$(Process).log
 output          = condor_logs/run_example_$(Cluster)_$(Process).out
