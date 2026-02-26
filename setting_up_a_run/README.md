@@ -73,15 +73,19 @@ THIS NEEDS TO DO THE CASA STUFF
     a nice tutorial [HTCondor users manual](https://htcondor.readthedocs.io/en/latest/users-manual/index.html)
 
 	submit a job
+	
 		condor_submit sub_job1.sub
 		
 	monitor the job
+	
 		condor_q
 	
     kill a job
+	
 		condor_rm JOBID
 	
 	check on the submitted job meets the requirements
+	
 		condor_q -better-analyze <JOB ID>
 
 
