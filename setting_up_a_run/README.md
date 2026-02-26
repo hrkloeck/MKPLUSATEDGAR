@@ -28,27 +28,62 @@ mkdir my_EDGAR_RUN
 cd my_EDGAR_RUN
 ```
 
-- clone the directory 
+- prepare the directory 
 
 ```
-git clone 
+git clone https://github.com/hrkloeck/MKPLUSATEDGAR
+```
+
+```
+cp MKPLUSATEDGAR/setting_up_a_run/*run* .
+```
+
+```
+rm -fr MKPLUSATEDGAR
 ```
 
 ```
 mkdir condor_logs
 ```
 
-In your directory there are two files:
+```
+THIS NEEDS TO DO THE CASA STUFF 
+```
 
-- run_example.sh
 
-	This file is your actual programme or script you want to run
+- In the directory there are two files:
 
-- sub_run_example.sub
+	run_example.sh (you need to edit this)
 
-	This file sorganises the submission of your example run.
-	Note: the request_cpus = 4 needs to fit the number of processors
-	of the build singularity image
+		This file is your actual programme or script you want to run.
+     
+
+    sub_run_example.sub (no editing nessesary)
+
+		This file sorganises the submission of your example run.
+		Note: the request_cpus = 4 needs to fit the number of processors
+		of the build singularity image
+
+
+
+- Submitting the job
+
+	The job submission on Edgar is organised via
+    [HTCondor](https://htcondor.readthedocs.io/en/latest/) and here is
+    a nice tutorial [HTCondor users manual](https://htcondor.readthedocs.io/en/latest/users-manual/index.html)
+
+	submit a job
+		condor_submit sub_job1.sub
+		
+	monitor the job
+		condor_q
+	
+    kill a job
+		condor_rm JOBID
+	
+	check on the submitted job meets the requirements
+		condor_q -better-analyze <JOB ID>
+
 
 
 ## Add additional packages 

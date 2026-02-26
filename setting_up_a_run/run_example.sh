@@ -6,7 +6,7 @@ set -euo pipefail  # safer bash: exit on error, unset vars are errors
 DATA_FILE="J0521+1638_cal.ms"
 
 # Define the path of the current working directory
-OUTPUT_DEST="/bEDD/u/HRK/TEST_RUNS/"
+OUTPUT_DEST="/bEDD/u/HRK/my_EDGAR_RUN/"
 
 # Define Container to use
 CONTAINER_NAME="MKPLUSATEDGAR.simg"
