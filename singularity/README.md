@@ -1,4 +1,4 @@
-# Generate the software suit for MeerKAT+ comissioing 
+# Generate the software suit for MeerKAT+ commissioning 
 
 ## The singularity scripts
 
@@ -44,7 +44,7 @@ cd MKPLUSATEDGAR/singularity
 ```
 
 ```
-singularity build --fakeroot MKPLUSATEDGAR.simg singularity.mkplus_full_022026
+singularity build --fakeroot MKPLUSATEDGAR.simg singularity_mkplus_full_022026
 ```
 
 
