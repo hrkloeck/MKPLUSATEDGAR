@@ -64,7 +64,9 @@ mkdir -p ${USER}/.casa/data
 
     sub_run_example.sub (no editing nessesary)
 
-		This file sorganises the submission of your example run.
+		This file organises the submission of your example run.
+        Note: you may want to add
+              +AccountingGroup = "g_mplus.hrk" (after getenv and before queue 1)
 		Note: the request_cpus = 4 needs to fit the number of processors
 		of the build singularity image
 
