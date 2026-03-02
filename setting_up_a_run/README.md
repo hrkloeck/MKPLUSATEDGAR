@@ -43,6 +43,10 @@ cp MKPLUSATEDGAR/setting_up_a_run/*run* .
 ```
 
 ```
+chmod 755 *run* 
+```
+
+```
 rm -fr MKPLUSATEDGAR
 ```
 
