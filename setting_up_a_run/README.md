@@ -128,7 +128,7 @@ singularity image.
 As an example we use the source finding tools from Jonah.
 
 ```
-git clone https://github.com/JonahDW/Image-processing.git
+git clone https://github.com/hrkloeck/daskmsASTROKIT.git 
 ```
 
 So you want to add to the package to the PYTHONPATH environment
