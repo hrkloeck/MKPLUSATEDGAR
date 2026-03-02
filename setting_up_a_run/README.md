@@ -66,7 +66,7 @@ mkdir -p ${USER}/.casa/data
 
 		This file organises the submission of your example run.
         Note: you may want to add
-              +AccountingGroup = "g_mplus.hrk" (after getenv and before queue 1)
+              +AccountingGroup = "g_mplus.USERID" (e.g. USERID = hrk; after getenv and before queue 1)
 		Note: the request_cpus = 4 needs to fit the number of processors
 		of the build singularity image
 
