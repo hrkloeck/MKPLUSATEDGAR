@@ -53,6 +53,12 @@ Notes:
 The packages pipdeptree and pipgrip has been installed to check the
 installed packages and dependencies or to explore package dependencies.
 
+- To visualise images the following packages have been installed: 
+
+	eye of gome (eog)[https://help.ubuntu.com/community/EyeofGNOME]
+	
+	(feh)[https://manpages.ubuntu.com/manpages/jammy/man1/feh.1.html] 
+
 - to checkout the installed packages use: 
 
 	```
