@@ -16,7 +16,7 @@ Run all the scripts in a bash shell
 	git clone https://github.com/hrkloeck/daskmsASTROKIT.git
 	```
 	
-	This script will run GET_OBS_INFORMATION.py to optain basic info
+	This script will run GET_MS_INFO.py from daskmsASTROKIT to optain basic info
     of the MS file:
 	
 	source 01_OBS_INFORMATION MSFILENAME $PWD
