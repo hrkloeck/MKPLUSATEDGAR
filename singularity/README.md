@@ -57,7 +57,7 @@ installed packages and dependencies or to explore package dependencies.
 
 	[eog](https://help.ubuntu.com/community/EyeofGNOME) and [feh](https://manpages.ubuntu.com/manpages/jammy/man1/feh.1.html)
 
-- to checkout the installed packages use: 
+- to checkout the installed python packages use: 
 
 	```
 	singularity exec MKPLUSATEDGAR.simg pipdeptree
