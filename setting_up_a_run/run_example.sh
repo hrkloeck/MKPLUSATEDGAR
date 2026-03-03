@@ -3,23 +3,39 @@
 set -euo pipefail  # safer bash: exit on error, unset vars are errors
 
 # Define MS dataset 
-DATA_FILE="J0521+1638_cal.ms"
+#
+# DATA_FILE_NAME=$1
+#
+DATA_FILE_NAME="J0521+1638_cal.ms"
 
 # Define the path of the current working directory
-OUTPUT_DEST="/bEDD/u/HRK/my_EDGAR_RUN/"
+#
+# WORK_PATH=$2
+#
+WORK_PATH="/bEDD/u/HRK/my_EDGAR_RUN/"
 
 # Define Container to use
+#
+# CONTAINER_NAME=$3
+#
 CONTAINER_NAME="MKPLUSATEDGAR.simg"
 
 # Define paths
-BIND_SRC="/bEDD/MPLUS-DATA/"
-BIND_DEST="/data"
 #
-CONTAINER="/bEDD/MPLUS-CONTAINER/${CONTAINER_NAME}"
+DATA_PATH="/bEDD/MPLUS-DATA/"
+CONT_PATH="/bEDD/MPLUS-CONTAINER"
+
+# Define singularity input
+#
+CONTAINER="${BIND_CONT}/${CONTAINER_NAME}"
+DATADIR="/data"
+WORKDIR="/work"
+
+
 MS_FILE="${BIND_DEST}/${DATA_FILE}"
 
 # Execute shadems inside singularity
-singularity exec --bind ${BIND_SRC}:${BIND_DEST} "${CONTAINER}" \
+singularity exec --bind ${WORK_PATH}:${WORKDIR} --bind ${DATA_PATH}:${DATADIR} "${CONTAINER}" \
     shadems \
     --xaxis uv \
     --yaxis DATA:amp \
