@@ -41,5 +41,5 @@ singularity exec --bind ${WORK_PATH}:${WORKDIR} --bind ${DATA_PATH}:${DATADIR} "
     --yaxis DATA:amp \
     --corr XX,YY \
     --iter-corr \
-    --dir "${OUTPUT_DEST}" \
+    --dir "${WORKDIR}" \
     "${MS_FILE}"
