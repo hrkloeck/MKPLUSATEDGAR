@@ -3,11 +3,12 @@
 Run all the scripts in a bash shell
 
 
-- source 00_RUN_SINGULARITY_SHELL
+- 00_RUN_SINGULARITY_SHELL
 	
-	This script will run a shell with all the setting 
+	This script will run the singularity container (MKPLUSATEDGAR.simg) in shell mode will all
+	settings for testing purposes. 
 	
-- source 01_OBS_INFORMATION
+- 01_OBS_INFORMATION
 
 	First copy the daskmsASTROKIT software in the current working directory
 	
@@ -15,8 +16,8 @@ Run all the scripts in a bash shell
 	git clone https://github.com/hrkloeck/daskmsASTROKIT.git
 	```
 	
-	If everything is at the place where it should be you can run the
-    script like:
+	This script will run GET_OBS_INFORMATION.py to optain basic info
+    of the MS file:
 	
 	source 01_OBS_INFORMATION MSFILENAME $PWD
 	
