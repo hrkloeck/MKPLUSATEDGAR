@@ -1,0 +1,282 @@
+Bootstrap: docker
+From: ubuntu:25.10
+
+%labels
+    Author Hans-Rainer Kloeckner (MPIfR)
+    Version v03.2026
+    Description "Ubuntu 25 and the base installation including virtualenv"
+
+%environment
+    export pyv_downloadversion=3.12.4
+    export DEBIAN_FRONTEND=noninteractive
+    export LC_ALL=C.UTF-8
+    export LANG=C.UTF-8
+    export MPLBACKEND=Agg
+    export CC=/usr/bin/gcc-15
+    export CXX=/usr/bin/g++-15
+    export LD_LIBRARY_PATH=/opt/nonsystem_python/lib/:/opt/meersoft/wsclean/lib/:$LD_LIBRARY_PATH
+    export PATH=/opt/meersoft/wsclean/bin/:$PATH
+    export PYTHONPATH=/opt/venviron/py_venv/lib/python${pyv_downloadversion}/site-packages
+    export BOOST_ROOT=/usr/local/include
+    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
+    export LIBGL_ALWAYS_INDIRECT=1
+
+%files
+    tricolour.yaml /opt/meersoft/yaml/
+    tricolour_oxkat.yaml /opt/meersoft/yaml/
+
+%post -c /bin/bash
+
+    #set -e
+    
+    # needs tp be set otherwise the intereactive time setting 
+    # will ask for input
+    #
+    export DEBIAN_FRONTEND=noninteractive
+
+    # define the number of processors cores availible
+    # -note nproc > 1 does not compile on pc28007
+    #  seems to be some umask setting problem
+    # - for Edgar use 16 and also define request_cpus
+    #   in the job submission
+    #
+    export nproc=16
+
+    # Define the CC compiler  
+    #
+    export CC=/usr/bin/gcc-15
+    export CXX=/usr/bin/g++-15
+
+    # ##########################################
+    #
+    # define the python version to be installed in the virtual environment
+    #
+    # check availible versions: https://www.python.org/ftp/python/
+    #
+    # tested with 3.8.16 will use numpy 1.1
+    # tested with 3.12.4 will use numpy 2.3.5
+    #
+    # define the version to download
+    # (IMPORTANT: CHANGE THIS ALSO IN THE ENVIRONMENT SECTION)
+    export pyv_downloadversion=3.12.4
+    #
+    # define the python name
+    #
+    export pyv_nonsystem=3.12
+    #
+    # ##########################################
+	
+    echo "Setting up the system..."
+    
+    apt-get update && apt-get install -y -q \
+        build-essential \
+	autotools-dev \
+	software-properties-common \
+	ca-certificates \
+        g++-15 \
+	gfortran \
+        cmake \
+	openmpi-bin \
+        python3 \
+        python3-dev \
+        python3-pip \
+	python3-venv \
+	python3-openssl \
+	libpython3-dev \
+	libreadline-dev \
+	libsqlite3-dev \
+	libncurses5-dev \
+	libncursesw5-dev \
+	libgdbm-dev \
+	libnss3-dev \
+	libffi-dev \
+	liblzma-dev \
+	libssl-dev \
+	libbz2-dev \
+        libfreetype-dev \
+        libpng-dev \
+	libblas-dev \
+	libicu-dev \
+	libcfitsio-dev \
+	libfftw3-dev \
+	libgsl-dev \
+	libhdf5-serial-dev \
+	libhdf5-dev \
+	liblapack-dev \
+	libopenmpi-dev \
+	libstdc++6 \
+	zlib1g-dev \
+	wcslib-dev \
+	xz-utils \
+	tk-dev \
+	wget \
+	llvm \
+        git \
+        curl \
+	pkg-config \
+	bison \
+	flex \
+	pip \
+	eog \
+	feh
+
+    
+    # ########## GENERAL SOFTWARE FROM SOURCECODE
+    #
+    #
+    #
+
+    # -----  Install non-system python version
+    #
+    # - this is needed because the Ubunto distribution 
+    #   does come only with a limited set of python versions
+    # - the python will be installed under /opt/nonsystem_python
+    #   with the version number (CAUTION the system version is also included)
+    # - Note this will not be installed system wide instead 
+    #   virtualenv will be pointed towards it
+    # - make -j $nproc for nproc > 1 will crash on pc28007 use 1 for testing
+    # - configure --enable-optimizations --enable-shared will generate dynamic
+    #   libraries (.so) instead of (.a) 
+    #
+    echo "Installing non system python version"${pyv_nonsystem}
+
+    mkdir /opt/nonsystem_python && \
+    chmod -R 777 /opt/nonsystem_python && \
+    mkdir /opt/nonsystem_python_build && \
+    chmod -R 777 /opt/nonsystem_python_build && \
+    cd /opt/nonsystem_python_build && \
+    wget https://www.python.org/ftp/python/${pyv_downloadversion}/Python-${pyv_downloadversion}.tgz && \
+    tar -xf Python-${pyv_downloadversion}.tgz && \
+    cd Python-${pyv_downloadversion} && \
+    ./configure --enable-optimizations --enable-shared --prefix=/opt/nonsystem_python && \
+    make -j $nproc && \
+    make install 
+    #
+    #
+    # make sure that the python3 call works via: 
+    # /opt/nonsystem_python/bin/python3
+    #
+    export LD_LIBRARY_PATH=/opt/nonsystem_python/lib/:$LD_LIBRARY_PATH
+    #
+    /opt/nonsystem_python/bin/pip3 install pybind11[global]
+    #
+    # ##########
+
+
+    # ----- Install boost
+    #
+    # https://archives.boost.io/release/
+    # https://www.boost.org/doc/libs/1_88_0/libs/libraries.htm#Category
+    #
+    # Notes:
+    #  - boost will be installed at the default location 
+    #  - with 1.79.0 compiled
+    #  - with 1.88.0 compiled
+    #  - CAUTION: Somehow there something strange in the installation
+    #    if you specify --with-python NONE of the other lib required
+    #    by casacore and wsclean are produced, unless explicitly name
+    #    them
+    #
+    export BO_VERSION=1.88.0
+    export BO_VERSION_TEXT=1_88_0
+    #
+    export Boost_NO_SYSTEM_PATHS=TRUE
+    #
+    #
+    cd / && \
+    wget --no-check-certificate https://archives.boost.io/release/${BO_VERSION}/source/boost_${BO_VERSION_TEXT}.tar.bz2 && \
+    tar xvf boost_${BO_VERSION_TEXT}.tar.bz2 && \
+    cd boost_${BO_VERSION_TEXT} && \
+    bash bootstrap.sh --with-python=/opt/nonsystem_python/bin/python${pyv_nonsystem} --with-python-root=/opt/nonsystem_python && \
+    ./b2 install --with=all --with-python --build-type=complete --layout=versioned --with-date_time --with-thread --with-system \
+    --with-filesystem --with-program_options -j $nproc && \
+    cd && / 
+    #
+    export BOOST_ROOT=/usr/local/include/
+    export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+    export CPLUS_INCLUDE_PATH=/usr/local/include:$CPLUS_INCLUDE_PATH
+    #
+    # ##########
+
+    #
+    #
+    #
+    # #######################################################
+
+
+    # ########## VIRTUAL PYTHON ENVIRONMENT
+    #
+    #
+    #
+
+    # ----- Install software via pip to prepare a virtual environment
+    #
+    # install virtualenv on the system (force this)
+    #
+    python3 -m pip install --break-system-packages virtualenv 
+    #
+    # ##########
+
+
+    # -----  Setting up a virtual environment 
+    #
+    # setting up a virtual environment
+    #  - use virtualenv for this (installed in the system python)
+    #  - pipe the activate mechanism into singularity to be activated on
+    #    singularity execution
+    #
+    echo "Setting up virtual environment ..."
+    #
+    mkdir /opt/venviron && \
+    chmod -R 777 /opt/venviron && \
+    cd /opt/venviron && \
+    virtualenv -p /opt/nonsystem_python/bin/python3 py_venv && \
+    source /opt/venviron/py_venv/bin/activate && \
+    echo "source /opt/venviron/py_venv/bin/activate" >> $SINGULARITY_ENVIRONMENT
+    #
+    #
+    export PYTHONPATH=/opt/venviron/py_venv/lib/python${pyv_downloadversion}/site-packages
+    #
+    # ##########
+
+
+    # ----- Install various packages in the virtual python environment
+    #
+    # Note:
+    #     - name it as: py_env 
+    #
+    echo "Install packages in the virtual environment ..."
+
+    # General tools to extract the package version
+    #
+    pip${pyv_nonsystem} install pipgrip pipdeptree 
+
+    #
+    # ##########
+
+
+    #
+    #
+    #
+    # #######################################################
+
+
+
+    # ########## ASTRO PACKAGES FROM SOURCE 
+    #
+
+  
+    #
+    # #######################################################
+
+
+
+    # Delete some files etc.
+    #
+    echo "Cleaning up..."
+    
+    #   apt-get clean
+    rm -rf /var/lib/apt/lists/*
+    rm -rf /opt/nonsystem_python_build
+    rm -fr /boost_${BO_VERSION_TEXT}.tar.bz2
+    rm -fr /boost_${BO_VERSION_TEXT}
