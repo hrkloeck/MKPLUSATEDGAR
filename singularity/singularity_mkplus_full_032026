@@ -70,7 +70,7 @@ From: ubuntu:25.10
     echo "Setting up the system..."
     
     apt-get update && apt-get install -y -q \
-    	build-essential \
+        build-essential \
 	autotools-dev \
 	software-properties-common \
 	ca-certificates \
