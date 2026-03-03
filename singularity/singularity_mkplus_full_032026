@@ -70,13 +70,13 @@ From: ubuntu:25.10
     echo "Setting up the system..."
     
     apt-get update && apt-get install -y -q \
-        build-essential \
+    	build-essential \
 	autotools-dev \
 	software-properties-common \
 	ca-certificates \
-        g++-15 \
+	g++-15 \
 	gfortran \
-        cmake \
+	cmake \
 	openmpi-bin \
         python3 \
         python3-dev \
@@ -112,14 +112,14 @@ From: ubuntu:25.10
 	tk-dev \
 	wget \
 	llvm \
-        git \
-        curl \
+	git \
+	curl \
 	pkg-config \
 	bison \
 	flex \
 	pip \
-        eog \
-        feh
+	eog \
+	feh
 
 
     # ########## GENERAL SOFTWARE FROM SOURCECODE
