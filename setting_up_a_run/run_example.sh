@@ -32,7 +32,7 @@ DATADIR="/data"
 WORKDIR="/work"
 
 
-MS_FILE="${DATA_PATH}/${DATA_FILE}"
+MS_FILE="${DATADIR}/${DATA_FILE}"
 
 # Execute shadems inside singularity
 singularity exec --bind ${WORK_PATH}:${WORKDIR} --bind ${DATA_PATH}:${DATADIR} "${CONTAINER}" \
