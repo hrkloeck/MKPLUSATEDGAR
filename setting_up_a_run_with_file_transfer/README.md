@@ -7,13 +7,13 @@ in MeerKAT+ science comissioing.
 In case you are not familiar with all this I suggest you start [setting_up_a_run](https://github.com/hrkloeck/MKPLUSATEDGAR/tree/main/setting_up_a_run)
 
 
-Do not use th classical HTcondor way here. It's not faster
-
+Do not use th classical HTcondor way here. 
 
 THIS IS NOT NEEDED WITH THE EDGAR ARCHITECTURE the esched 10 Gb/s to
 the local node disk.
 
-Better to copy the data directly to the scratch disk on the node.
+Better to copy the data directly frmo bEDD to the scratch disk of the
+node. Although this needs to be done within your script. 
 
 
 ## The data structure on esched for MK+ 
