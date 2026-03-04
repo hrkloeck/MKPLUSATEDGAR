@@ -117,6 +117,29 @@ Some usefull commands:
 
 		condor_status
 
+
+## Working on Edgar interactively 
+
+Submit the job (note some of the parameters will be ignored by HTcondor)
+
+	```
+	condor_submit -interactive sub_run_example.sub
+	```
+
+
+Once you are on a node get bash as terminal environment (if that is not your default) 
+
+	```
+	cp /etc/bash.bashrc .
+	source bash.bashrc
+	```
+	
+Now you could start a job or test a script
+
+	```
+	source run_example.sh
+	```
+
 ## Add additional packages 
 
 Here is an explanation to add 3rd hand software packages and run the
