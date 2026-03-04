@@ -1,7 +1,19 @@
-# Run a job on Edgar 
+# Run a job on Edgar using file transfer 
+
 
 Please note that this explanation is mainly for MPIfR people involved
 in MeerKAT+ science comissioing.
+
+In case you are not familiar with all this I suggest you start [setting_up_a_run](https://github.com/hrkloeck/MKPLUSATEDGAR/tree/main/setting_up_a_run)
+
+
+Do not use th classical HTcondor way here. It's not faster
+
+
+THIS IS NOT NEEDED WITH THE EDGAR ARCHITECTURE the esched 10 Gb/s to
+the local node disk.
+
+Better to copy the data directly to the scratch disk on the node.
 
 
 ## The data structure on esched for MK+ 
@@ -17,7 +29,8 @@ in MeerKAT+ science comissioing.
 - Raw data directory:
 
     /bEDD/MPLUS-DATA
-
+	
+	
 
 ## A simple setup to submit a job via esched
 
@@ -28,8 +41,8 @@ a job.
 - make a directory in your user directory:
 
 ```
-mkdir my_EDGAR_RUN
-cd my_EDGAR_RUN
+mkdir my_EDGAR_BIGRUN
+cd my_EDGAR_BIGRUN
 ```
 
 - prepare the directory 
@@ -39,7 +52,7 @@ git clone https://github.com/hrkloeck/MKPLUSATEDGAR
 ```
 
 ```
-cp MKPLUSATEDGAR/setting_up_a_run/*run* .
+cp MKPLUSATEDGAR/setting_up_a_run_with_file_transfer/*run* .
 ```
 
 ```
@@ -73,6 +86,14 @@ mkdir -p ${USER}/.casa/data
               +AccountingGroup = "g_mplus.USERID" (e.g. USERID = hrk; after getenv and before queue 1)
 		Note: the request_cpus = 4 needs to fit the number of processors
 		of the build singularity image
+
+
+Now in job submission we add additional parameter through the scripts
+(this is a nice feature in HTcondor)
+
+```
+condor_submit sub_run_example_filetransfer.sub DATA_PATH=/bEDD/MPLUS-DATA/ DATA_FILE=J0521+1638_cal.ms
+```
 
 
 
@@ -116,10 +137,6 @@ Some usefull commands:
 - get resource info
 
 		condor_status
-
-- log onto a job (usefull for debugging the run scripts)
-
-		condor_ssh_to_job JobID
 
 
 ## Working on Edgar interactively 
