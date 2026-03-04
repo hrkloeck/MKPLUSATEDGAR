@@ -25,12 +25,8 @@ CONTAINER="${CONT_PATH}/${CONTAINER_NAME}"
 DATADIR="/data"
 WORKDIR="/work"
 
-# Move original dataset to local directrory
-#
-rsync -av "${DATA_PATH}/${DATA_FILE}" ${WORK_PATH}
 
-#MS_FILE="${DATADIR}/${DATA_FILE}"
-MS_FILE="${WORKDIR}/${DATA_FILE}"
+MS_FILE="${DATADIR}/${DATA_FILE}"
 
 # Execute shadems inside singularity
 singularity exec --bind ${WORK_PATH}:${WORKDIR} --bind ${DATA_PATH}:${DATADIR} "${CONTAINER}" \
