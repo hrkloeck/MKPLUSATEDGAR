@@ -6,7 +6,7 @@ set -euo pipefail  # safer bash: exit on error, unset vars are errors
 #
 # DATA_FILE_NAME=$1
 #
-DATA_FILE_NAME="J0521+1638_cal.ms"
+DATA_FILE="J0521+1638_cal.ms"
 
 # Define the path of the current working directory
 #
@@ -18,7 +18,7 @@ WORK_PATH="/bEDD/u/HRK/my_EDGAR_RUN/"
 #
 # CONTAINER_NAME=$3
 #
-CONTAINER_NAME="MKPLUSATEDGAR.simg"
+CONTAINER_NAME="MKPLUSATEDGAR_SHADEMS.simg"
 
 # Define paths
 #
