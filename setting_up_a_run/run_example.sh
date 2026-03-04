@@ -4,20 +4,13 @@ set -euo pipefail  # safer bash: exit on error, unset vars are errors
 
 # Define MS dataset 
 #
-# DATA_FILE_NAME=$1
-#
-# DATA_FILE="J0521+1638_cal.ms"
+DATA_FILE=$1
 
 # Define the path of the current working directory
-#
-# WORK_PATH=$2
-# WORK_PATH="/bEDD/u/HRK/my_EDGAR_RUN/"
 #
 WORK_PATH=${PWD}
 
 # Define Container to use
-#
-# CONTAINER_NAME=$3
 #
 CONTAINER_NAME="MKPLUSATEDGAR_SHADEMS.simg"
 
