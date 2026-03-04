@@ -135,6 +135,7 @@ and your prompt in the terminal
 Once you are on a node get bash as terminal environment (if that is not your default) 
 
 	cp /etc/bash.bashrc .
+	bash
 	source bash.bashrc
 	
 Now you could start a job or test a script
