@@ -84,10 +84,10 @@ a nice tutorial [HTCondor users
 manual](https://htcondor.readthedocs.io/en/latest/users-manual/index.html).
 
 
-- Submit a job (assuming you are logged on esched)
+- Submit a job (assuming you are logged on esched and the data file is in /bEDD/MPLUS-DATA)
 
 ```
-condor_submit sub_run_example.sub
+condor_submit sub_run_example.sub DATA_FILE=J0521+1638_cal.ms
 ```
 
 
