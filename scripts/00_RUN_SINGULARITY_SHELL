@@ -2,16 +2,13 @@
 
 # HRK MPIfR 2026
 #
-# in bash sehll source FILENAME
+# in bash shell source FILENAME
 #
 
 set -euo pipefail  # safer bash: exit on error, unset vars are errors
 
-# Define MS dataset
-# DATA_FILE_NAME=$1
-
-# Define the path of the current working directory
-# WORK_PATH=$2
+# Define the path of the base directory
+WORK_PATH=$1
 
 # Define Container to use
 CONTAINER_NAME="MKPLUSATEDGAR.simg"
