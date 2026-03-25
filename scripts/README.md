@@ -19,14 +19,14 @@ Run all the scripts in a bash shell
 	This script will run GET_MS_INFO.py from daskmsASTROKIT to optain basic info
     of the MS file:
 
-```
-source 01_OBS_INFORMATION MSFILENAME $PWD
-```
+	```
+	source 01_OBS_INFORMATION MSFILENAME $PWD
+	```
 
 - 02_OBS_DIAGNOSTIC_PLOTS using shadems
 
 	Example of a bandpass (amplitude versus frequency) plot 
 	
-```
-source 01_OBS_INFORMATION MSFILENAME $PWD
-```
+	```
+	source 01_OBS_INFORMATION MSFILENAME $PWD
+	```
