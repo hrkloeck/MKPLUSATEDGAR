@@ -23,7 +23,7 @@ Run all the scripts in a bash shell
 source 01_OBS_INFORMATION MSFILENAME $PWD
 ```
 
-- 02_OBS_DIAGNOSTIC_PLOTS
+- 02_OBS_DIAGNOSTIC_PLOTS using shadems
 
 	Example of a bandpass (amplitude versus frequency) plot 
 	
