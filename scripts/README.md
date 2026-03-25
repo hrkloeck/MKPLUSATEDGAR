@@ -28,5 +28,20 @@ Run all the scripts in a bash shell
 	Example of a bandpass (amplitude versus frequency) plot 
 	
 	```
-	source 01_OBS_INFORMATION MSFILENAME $PWD
+	source 02_OBS_DIAGNOSTIC_PLOTS MSFILENAME $PWD
+	```
+
+- 03_RUN_PYTHON_CASA
+
+	Please note you need to do the follwong in the current working
+    directory.
+	
+	```
+	mkdir -p ${USER}/.casa/data
+	```
+
+	Example of a python script bandpass (amplitude versus frequency) plot 
+	
+	```
+	source 03_RUN_PYTHON_CASA MSFILENAME $PWD
 	```
