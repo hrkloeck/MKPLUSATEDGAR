@@ -18,7 +18,8 @@ CONTAINER_NAME="MKPLUSATEDGAR.simg"
 
 # Define path
 #
-DATA_PATH="/bEDD/MPLUS-DATA/"
+# DATA_PATH="/bEDD/MPLUS-DATA/"
+DATA_PATH="/bEDD/MPLUS-WORKONDATA/"
 CONT_PATH="/bEDD/MPLUS-CONTAINER/"
 
 # Define singularity input 
@@ -29,7 +30,7 @@ WORKDIR="/work/"
 
 
 # Execute shadems inside singularity
-singularity exec --bind ${WORK_PATH}:${WORKDIR} --bind ${DATA_PATH}:${DATADIR} "${CONTAINER}" python3 \
+singularity exec --bind ${WORK_PATH}:${WORKDIR} --bind ${DATA_PATH}:${DATADIR} "${CONTAINER}" python3 -W ignore \
 	    ${WORKDIR}/daskmsASTROKIT/daskms_ASTROKIT/GET_MS_INFO.py --DATA_DIR=${DATADIR} --WORK_DIR=${WORKDIR} \
 	    --MS_FILE=${DATA_FILE}  > ${WORK_PATH}/${DATA_FILE}_INFO
 
