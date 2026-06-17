@@ -1,3 +1,8 @@
+## Submit the script via condor 
+
+Have a look (here)[https://github.com/hrkloeck/MKDCFLOW/tree/main/esched]
+
+
 ## Scripts
 
 Run all the scripts in a bash shell
