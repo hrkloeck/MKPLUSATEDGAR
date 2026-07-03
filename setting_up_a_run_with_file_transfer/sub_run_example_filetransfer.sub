@@ -16,4 +16,6 @@ when_to_transfer_output = ON_EXIT
 # Define files to move to the worker node
 transfer_input_files    = $(DATA_PATH)/$(DATA_FILE)
 
+accounting_group = g_mplus
+
 queue 1
