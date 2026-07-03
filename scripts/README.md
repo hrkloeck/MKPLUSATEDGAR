@@ -1,11 +1,11 @@
-## Submit the script via condor 
+## Howto submit script via condor 
 
 Have a look (here)[https://github.com/hrkloeck/MKDCFLOW/tree/main/esched]
 
 
-## Scripts
+## Example Scripts
 
-Run all the scripts in a bash shell
+These scripts are examples howto run singularity and the various software packages These scripts need to be executed in a bash shell
 
 
 - 00_RUN_SINGULARITY_SHELL
