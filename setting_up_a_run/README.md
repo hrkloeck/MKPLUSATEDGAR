@@ -109,9 +109,9 @@ Some usefull commands:
 	
 		condor_q -better-analyze <JOB ID>
 
-- start an interactive job
+- start an interactive job (using the first example)
 
-		condor_submit -interactive
+		condor_submit -interactive 01_OBS_INFORMATION.sub
 
 - get resource info
 
