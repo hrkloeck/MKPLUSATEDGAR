@@ -32,10 +32,10 @@ cd my_SING_BUILD
 - and point singularity to a temporary directory for
   the buildung process.
   
-  ```
-  mkdir tmp_sing
-  export APPTAINER_TMPDIR=${PWD}/tmp_sing
-  ```
+```
+mkdir tmp_sing
+export APPTAINER_TMPDIR=${PWD}/tmp_sing
+```
 
 - get the depository either via git clone or download the source:
 
