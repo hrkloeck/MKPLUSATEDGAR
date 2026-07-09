@@ -16,12 +16,10 @@ I have produces two script that can be used for different purposses:
 
 ## Generate the singularity container 
 
-- use bash shell and point singularity to a temporary directory for
-  the buildung process.
+- use bash shell 
 
 ```
 bash
-export APPTAINER_TMPDIR=/media/scratch
 ```
 
 - make a directory 
@@ -30,6 +28,14 @@ export APPTAINER_TMPDIR=/media/scratch
 mkdir my_SING_BUILD
 cd my_SING_BUILD
 ```
+
+- and point singularity to a temporary directory for
+  the buildung process.
+  
+  ```
+  mkdir tmp_sing
+  export APPTAINER_TMPDIR=${PWD}/tmp_sing
+  ```
 
 - get the depository either via git clone or download the source:
 
