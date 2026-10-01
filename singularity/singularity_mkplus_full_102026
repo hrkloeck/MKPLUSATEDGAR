@@ -227,6 +227,53 @@ From: ubuntu:25.10
 
 
 
+    # ----- Install CASACORE
+    #
+    #
+    # Install casacore data
+    #
+    # Install WSRT Measures (extra casacore data, for tests)
+    # Note: The file on the ftp site is updated daily. When warnings regarding leap
+    # seconds appear, ignore them or regenerate the docker image.
+    # 
+    mkdir -p /opt/meersoft/casacoredata && \
+    cd /opt/meersoft/casacoredata && \
+    wget ftp://anonymous@ftp.astron.nl/outgoing/Measures/WSRT_Measures.ztar && \
+    tar xvf WSRT_Measures.ztar && \
+    rm WSRT_Measures.ztar
+
+    # Install casacore
+    #    
+    # https://github.com/casacore/casacore
+    #
+    mkdir /external && \
+    cd /external && \
+    git clone --depth 1 https://github.com/casacore/casacore.git && \
+    cd /external/casacore && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DBUILD_TESTING=OFF \
+     -DCMAKE_INSTALL_PREFIX=/opt/meersoft/casacore \
+     -DCMAKE_PREFIX_PATH=/usr/local/lib/cmake/Boost-${BO_VERSION} \
+     -DUSE_OPENMP=OFF \
+     -DUSE_HDF5=ON \
+     -DDATA_DIR=/opt/meersoft/casacoredata \
+     -DUSE_THREADS=ON \
+     -DBUILD_PYTHON3=ON \
+     -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
+     -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
+     -DPYTHON3_LIBRARY=/opt/nonsystem_python/lib \
+     -DCMAKE_POSITION_INDEPENDENT_CODE=ON && \
+    make -j $nproc && \
+    make install && \
+    cd /
+    #
+    #
+    export LD_LIBRARY_PATH=/opt/meersoft/casacore/lib/:$LD_LIBRARY_PATH
+    export PATH=/opt/meersoft/casacore/bin/:$PATH
+    #
+    # ##########
+
 
     # -----  WSCLEAN
     #
