@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# HRK MPIfR 2026
+#
+#
+#
+mkdir my_SING_BUILD
+cd my_SING_BUILD
+#
+mkdir tmp_sing
+export APPTAINER_TMPDIR=${PWD}/tmp_sing
+#
+git clone https://github.com/hrkloeck/MKPLUSATEDGAR.git
+#
+cd MKPLUSATEDGAR/singularity
+#
+singularity build --fakeroot MKPLUSATEDGAR.simg singularity_mkplus_full_032026
