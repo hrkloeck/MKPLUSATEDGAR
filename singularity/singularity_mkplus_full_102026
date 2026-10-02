@@ -294,6 +294,8 @@ From: ubuntu:25.10
     cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
        -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore \
+       -DTARGET_CPU=haswell \
+       -DPORTABLE=True \
        -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
        -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
        -DPYTHON3_LIBRARY=/opt/nonsystem_python/lib \
