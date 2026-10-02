@@ -87,6 +87,7 @@ From: ubuntu:25.10
         libboost-filesystem1.88-dev \
         libboost-graph1.88-dev \
         libboost-program-options1.88-dev \
+	libboost-python1.88-dev \
 	libdeflate-dev \
 	libpython3-dev \
 	libreadline-dev \
