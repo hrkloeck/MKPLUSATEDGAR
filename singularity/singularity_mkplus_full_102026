@@ -3,7 +3,7 @@ From: ubuntu:25.10
 
 %labels
     Author Hans-Rainer Kloeckner (MPIfR)
-    Version v03.2026
+    Version v04.2026
     Description "Ubuntu 25 virtualenv and radio astro stuff"
 
 %environment
@@ -83,6 +83,10 @@ From: ubuntu:25.10
         python3-pip \
 	python3-venv \
 	python3-openssl \
+	libboost-container1.88-dev \
+        libboost-filesystem1.88-dev \
+        libboost-graph1.88-dev \
+        libboost-program-options1.88-dev \
 	libpython3-dev \
 	libreadline-dev \
 	libsqlite3-dev \
@@ -246,6 +250,7 @@ From: ubuntu:25.10
     #    
     # https://github.com/casacore/casacore
     #
+    # 
     mkdir /external && \
     cd /external && \
     git clone --depth 1 https://github.com/casacore/casacore.git && \
@@ -254,7 +259,6 @@ From: ubuntu:25.10
     cd build && \
     cmake .. -DBUILD_TESTING=OFF \
      -DCMAKE_INSTALL_PREFIX=/opt/meersoft/casacore \
-     -DCMAKE_PREFIX_PATH=/usr/local/lib/cmake/Boost-${BO_VERSION} \
      -DUSE_OPENMP=OFF \
      -DUSE_HDF5=ON \
      -DDATA_DIR=/opt/meersoft/casacoredata \
