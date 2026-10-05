@@ -109,6 +109,7 @@ From: ubuntu:25.10
 	libgsl-dev \
 	libhdf5-serial-dev \
 	libhdf5-dev \
+	libhdf5-tools \
 	liblapack-dev \
 	libopenmpi-dev \
 	libstdc++6 \
@@ -226,8 +227,8 @@ From: ubuntu:25.10
 
     # Packages needed for CASACORE and WSCLEAN
     #
-    pip${pyv_nonsystem} install numpy pybind11[global]
-
+    pip${pyv_nonsystem} install numpy pybind11[global] h5py
+    
     #
     # ##########
 
