@@ -328,9 +328,9 @@ From: ubuntu:25.10
     echo "Cleaning up..."
     
     #   apt-get clean
-    rm -rf /var/lib/apt/lists/*
-    rm -rf /opt/nonsystem_python_build
-    rm -fr /wsclean
-    rm -fr /opt/meersoft/LSM/katsdpcal
-    rm -fr /boost_${BO_VERSION_TEXT}.tar.bz2
-    rm -fr /boost_${BO_VERSION_TEXT}
+    #rm -rf /var/lib/apt/lists/*
+    #rm -rf /opt/nonsystem_python_build
+    #rm -fr /wsclean
+    #rm -fr /opt/meersoft/LSM/katsdpcal
+    #rm -fr /boost_${BO_VERSION_TEXT}.tar.bz2
+    #rm -fr /boost_${BO_VERSION_TEXT}
