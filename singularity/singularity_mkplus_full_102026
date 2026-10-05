@@ -109,7 +109,6 @@ From: ubuntu:25.10
 	libgsl-dev \
 	libhdf5-serial-dev \
 	libhdf5-dev \
-	libhdf5-tools \
 	liblapack-dev \
 	libopenmpi-dev \
 	libstdc++6 \
