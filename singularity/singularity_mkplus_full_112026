@@ -14,7 +14,7 @@ From: ubuntu:25.10
     export MPLBACKEND=Agg
     export CC=/usr/bin/gcc-15
     export CXX=/usr/bin/g++-15
-    export LD_LIBRARY_PATH=/opt/nonsystem_python/lib/:/opt/meersoft/wsclean/lib/:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/usr/local/include:/opt/nonsystem_python/lib/:/opt/meersoft/wsclean/lib/:$LD_LIBRARY_PATH
     export PATH=/opt/meersoft/wsclean/bin/:$PATH
     export PYTHONPATH=/opt/venviron/py_venv/lib/python${pyv_downloadversion}/site-packages
     export BOOST_ROOT=/usr/local/include
