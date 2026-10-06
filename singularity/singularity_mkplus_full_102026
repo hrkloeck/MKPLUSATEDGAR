@@ -209,6 +209,9 @@ From: ubuntu:25.10
     #
     #
     export PYTHONPATH=/opt/venviron/py_venv/lib/python${pyv_downloadversion}/site-packages
+
+    export LD_LIBRARY_PATH=/opt/venviron/py_venv/lib/python${pyv_downloadversion}/site-packages:$LD_LIBRARY_PATH
+
     #
     # ##########
 
@@ -226,7 +229,7 @@ From: ubuntu:25.10
 
     # Packages needed for CASACORE and WSCLEAN
     #
-    pip${pyv_nonsystem} install numpy pybind11[global] h5py
+    pip${pyv_nonsystem} install numpy pybind11[global] h5py boost
     
     #
     # ##########
