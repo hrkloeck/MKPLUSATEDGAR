@@ -260,9 +260,6 @@ From: ubuntu:25.10
     #
     # ##########
 
-
-   
-
     #
     #
     #
@@ -331,7 +328,8 @@ From: ubuntu:25.10
     # https://sourceforge.net/p/wsclean/wiki/Installation/
     #
     # install for different cpu architecture
-    # -DTARGET_CPU=skylake \
+    # -DTARGET_CPU=skylake \ CAUTION EDD NODES ARE VITUAL / AMD and not INTEL
+    #
     # ;/usr/local/lib/cmake/Boost-${BO_VERSION}
     #
     cd / && git clone https://gitlab.com/aroffringa/wsclean.git && \
@@ -355,6 +353,108 @@ From: ubuntu:25.10
     export PATH=/opt/meersoft/wsclean/bin/:$PATH
     #
     # ##########
+
+
+
+    # ----- Install astro packages in the virtual python environment
+    #
+
+    # Install SHADEMS to optain most of the packages needed
+    # for the radio software packages
+    #
+
+    # unfortunately the installation may overwrite some packages 
+    # dask framework complains about meta keyword
+    # so generate a single shadems container.
+    #
+    # pip${pyv_nonsystem} install shadems
+
+    pip${pyv_nonsystem} install scipy
+
+    pip${pyv_nonsystem} install git+https://github.com/ratt-ru/tricolour.git
+
+    pip${pyv_nonsystem} install git+https://github.com/ska-sa/katbeam.git
+    
+    pip${pyv_nonsystem} install git+https://github.com/caracal-pipeline/crystalball.git    
+
+    pip${pyv_nonsystem} install codex-africanus[complete]
+
+    # for devlopment purpose does not install once a stable version is in place
+    #
+    # pip${pyv_nonsystem} install git+https://github.com/hrkloeck/daskmsASTROKIT.git
+   
+    pip${pyv_nonsystem} install regions
+    
+    pip${pyv_nonsystem} install shapely==2.0.6
+
+    pip${pyv_nonsystem} install numpyencoder
+
+    # installs pybdsf 
+    pip${pyv_nonsystem} install bdsf[ishell]
+
+    pip${pyv_nonsystem} install git+https://github.com/PaulHancock/Aegean.git
+
+    
+    # RATT / SARAO additional packages 
+    # https://github.com/orgs/ratt-ru/repositories
+    #
+    pip${pyv_nonsystem} install ragavi
+
+    # careful this stuff downloads some casatask etc
+    #
+    pip${pyv_nonsystem} install simms
+    
+    pip${pyv_nonsystem} install git+https://github.com/ratt-ru/CubiCal.git
+    
+    # Montage for
+    # https://github.com/Caltech-IPAC/Montage/tree/main/python/MontagePy
+    #
+    pip${pyv_nonsystem} install MontagePy
+
+    #
+    # Packages that do not install
+    #
+    # -  pip${pyv_nonsystem} install git+https://github.com/ska-sa/katsdpcal.git
+    #    This package needs python 2.7
+    #
+    #  - pip${pyv_nonsystem} install quartical
+    #
+    # ##########
+
+    # ----- Install CASA packages 
+    #
+    # https://casadocs.readthedocs.io/en/stable/notebooks/introduction.html#Modular-Packages
+    #
+    # the versions are tested for python3.12
+    #
+    pip${pyv_nonsystem} install casaconfig==1.4.0
+    
+    pip${pyv_nonsystem} install casatools==6.7.3.21
+   
+    pip${pyv_nonsystem} install casatasks==6.7.3.21
+    
+    pip${pyv_nonsystem} install casaplotms==2.8.2
+    
+    pip${pyv_nonsystem} install casaviewer==2.4.4
+    
+    pip${pyv_nonsystem} install casashell==6.7.3.21
+    
+    pip${pyv_nonsystem} install casaplotserver==2.0.3
+    
+    pip${pyv_nonsystem} install casatestutils==6.7.3.21
+    
+    pip${pyv_nonsystem} install casatablebrowser==0.0.40
+    
+    pip${pyv_nonsystem} install casalogger==1.0.23
+    
+    pip${pyv_nonsystem} install casafeather==0.0.27
+
+    pip${pyv_nonsystem} install casampi==0.5.9
+
+    #
+    # ##########
+
+
 
 
 
