@@ -107,6 +107,7 @@ From: ubuntu:25.10
 	liblapack-dev \
 	libopenmpi-dev \
 	libstdc++6 \
+	libnss-systemd \
 	zlib1g-dev \
 	wcslib-dev \
 	xz-utils \
@@ -216,7 +217,7 @@ From: ubuntu:25.10
     #
     # install virtualenv on the system (force this)
     #
-    python3 -m pip install --break-system-packages virtualenv 
+    python3 -m pip install --ignore-installed --break-system-packages virtualenv 
     #
     # ##########
 
