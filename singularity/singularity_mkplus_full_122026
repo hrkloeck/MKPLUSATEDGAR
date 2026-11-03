@@ -292,13 +292,12 @@ From: ubuntu:25.10
     # https://github.com/casacore/casacore
     # https://github.com/casacore/casacore/releases
     #
-    export CASACOREVER=3.7.1
+    export CASACORE_VER=3.7.1
     #
     mkdir /external && \
     cd /external && \
-    git clone --depth 1 https://github.com/casacore/casacore.git && \
-    cd /external/casacore && \
-    git checkout v${CASACOREVER} && \
+    wget https://github.com/casacore/casacore/archive/v${CASACORE_VER}.tar.gz && \    
+    cd /external/casacore-${CASACORE_VER} && \
     mkdir build && \
     cd build && \
     cmake .. -DBUILD_TESTING=OFF \
@@ -308,11 +307,13 @@ From: ubuntu:25.10
      -DUSE_HDF5=ON \
      -DDATA_DIR=/opt/meersoft/casacoredata \
      -DUSE_THREADS=ON \
+     -DBUILD_PYTHON=OFF \
      -DBUILD_PYTHON3=ON \
      -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
      -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
      -DPYTHON3_LIBRARY=/opt/nonsystem_python/lib \
      -DCMAKE_POSITION_INDEPENDENT_CODE=ON && \
+     -DCMAKE_CXX_FLAGS="-fsigned-char -O2 -DNDEBUG"
     make -j $nproc && \
     make install && \
     cd /
@@ -486,3 +487,4 @@ From: ubuntu:25.10
     #rm -fr /opt/meersoft/LSM/katsdpcal
     #rm -fr /boost_${BO_VERSION_TEXT}.tar.bz2
     #rm -fr /boost_${BO_VERSION_TEXT}
+    #rm -fr /external/casacore*
