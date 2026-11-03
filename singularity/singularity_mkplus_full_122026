@@ -104,6 +104,7 @@ From: ubuntu:25.10
 	libgsl-dev \
 	libhdf5-serial-dev \
 	libhdf5-dev \
+	hdf5-tools \
 	liblapack-dev \
 	libopenmpi-dev \
 	libstdc++6 \
@@ -272,6 +273,8 @@ From: ubuntu:25.10
     # ########## ASTRO PACKAGES FROM SOURCE 
     #
 
+    echo "Install CASACORE ... "
+
     # ----- Install CASACORE
     #
     #
@@ -296,7 +299,8 @@ From: ubuntu:25.10
     #
     mkdir /external && \
     cd /external && \
-    wget https://github.com/casacore/casacore/archive/v${CASACORE_VER}.tar.gz && \    
+    wget https://github.com/casacore/casacore/archive/v${CASACORE_VER}.tar.gz && \
+    tar xvf v${CASACORE_VER}.tar.gz && \
     cd /external/casacore-${CASACORE_VER} && \
     mkdir build && \
     cd build && \
@@ -333,6 +337,8 @@ From: ubuntu:25.10
     #
     # https://gitlab.com/aroffringa/wsclean
     # https://sourceforge.net/p/wsclean/wiki/Installation/
+    #
+    echo "Install WSCLEAN ..."
     #
     # Define VERSION
     #
@@ -372,6 +378,11 @@ From: ubuntu:25.10
 
     # ----- Install astro packages in the virtual python environment
     #
+    echo "Install astro packages via pip ..."
+
+
+    pip${pyv_nonsystem} install psutil==7.2.0
+    
 
     # Install SHADEMS to optain most of the packages needed
     # for the radio software packages
