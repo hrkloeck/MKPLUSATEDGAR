@@ -295,7 +295,7 @@ From: ubuntu:25.10
     # https://github.com/casacore/casacore
     # https://github.com/casacore/casacore/releases
     #
-    export CASACORE_VER=3.7.1
+    export CASACORE_VER=3.8.1
     #
     mkdir /external && \
     cd /external && \
