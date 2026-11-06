@@ -338,39 +338,39 @@ From: ubuntu:25.10
     # https://gitlab.com/aroffringa/wsclean
     # https://sourceforge.net/p/wsclean/wiki/Installation/
     #
-#    echo "Install WSCLEAN ..."
+    echo "Install WSCLEAN ..."
     #
     # Define VERSION
     #
     # https://gitlab.com/aroffringa/wsclean/-/releases
     #
-#    export WSCVERSION=3.6
+    export WSCVERSION=3.6
     #
     # install for different cpu architecture
     # -DTARGET_CPU=skylake \ CAUTION EDD NODES ARE VITUAL / AMD and not INTEL
     #
     # ;/usr/local/lib/cmake/Boost-${BO_VERSION}
     #
-#    cd / && git clone https://gitlab.com/aroffringa/wsclean.git && \
-#    cd wsclean && \
-#    git checkout v${WSCVERSION} && \
-#    mkdir build && \
-#    cd build && \
-#    cmake .. -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
-#       -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore \
-#       -DPORTABLE=True \
-#       -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
-#       -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
-#       -DPYTHON3_LIBRARY=/opt/nonsystem_python/lib \
-#       -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-#       -Dpybind11_DIR=/opt/venviron/py_venv/lib/python${pyv_nonsystem}/site-packages/pybind11/share/cmake/pybind11 && \
-#    make -j $nproc && \
-#    make install && \
-#    cd /
+    cd / && git clone https://gitlab.com/aroffringa/wsclean.git && \
+    cd wsclean && \
+    git checkout v${WSCVERSION} && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
+       -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore \
+       -DPORTABLE=True \
+       -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
+       -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
+       -DPYTHON3_LIBRARY=/opt/nonsystem_python/lib \
+       -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+       -Dpybind11_DIR=/opt/venviron/py_venv/lib/python${pyv_nonsystem}/site-packages/pybind11/share/cmake/pybind11 && \
+    make -j $nproc && \
+    make install && \
+    cd /
     #
     #
-#    export LD_LIBRARY_PATH=/opt/meersoft/wsclean/lib/:$LD_LIBRARY_PATH
-#    export PATH=/opt/meersoft/wsclean/bin/:$PATH
+    export LD_LIBRARY_PATH=/opt/meersoft/wsclean/lib/:$LD_LIBRARY_PATH
+    export PATH=/opt/meersoft/wsclean/bin/:$PATH
     #
     # ##########
 
@@ -378,7 +378,7 @@ From: ubuntu:25.10
 
     # ----- Install astro packages in the virtual python environment
     #
-    echo "Install astro packages via pip ..."
+#    echo "Install astro packages via pip ..."
 
 
 #    pip${pyv_nonsystem} install psutil==7.2.0
