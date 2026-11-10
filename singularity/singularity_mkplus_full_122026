@@ -349,6 +349,7 @@ From: ubuntu:25.10
     # install for different cpu architecture
     # -DTARGET_CPU=skylake \ CAUTION EDD NODES ARE VITUAL / AMD and not INTEL
     #
+    # -DPORTABLE=True \
     # ;/usr/local/lib/cmake/Boost-${BO_VERSION}
     #
     cd / && git clone --recursive https://gitlab.com/aroffringa/wsclean.git && \
@@ -358,7 +359,7 @@ From: ubuntu:25.10
     cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
        -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore \
-       -DPORTABLE=True \
+       -DTARGET=haswell \
        -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
        -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
        -DPYTHON3_LIBRARY=/opt/nonsystem_python/lib \
