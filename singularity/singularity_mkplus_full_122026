@@ -351,7 +351,7 @@ From: ubuntu:25.10
     #
     # ;/usr/local/lib/cmake/Boost-${BO_VERSION}
     #
-    cd / && git clone https://gitlab.com/aroffringa/wsclean.git && \
+    cd / && git clone --recursive https://gitlab.com/aroffringa/wsclean.git && \
     cd wsclean && \
     git checkout v${WSCVERSION} && \
     mkdir build && \
@@ -394,36 +394,36 @@ From: ubuntu:25.10
     #
     # pip${pyv_nonsystem} install shadems
 
-    pip${pyv_nonsystem} install scipy
+#    pip${pyv_nonsystem} install scipy
 
-    pip${pyv_nonsystem} install git+https://github.com/ratt-ru/tricolour.git
+#    pip${pyv_nonsystem} install git+https://github.com/ratt-ru/tricolour.git
 
-    pip${pyv_nonsystem} install git+https://github.com/ska-sa/katbeam.git
+#    pip${pyv_nonsystem} install git+https://github.com/ska-sa/katbeam.git
     
-    pip${pyv_nonsystem} install git+https://github.com/caracal-pipeline/crystalball.git    
+#    pip${pyv_nonsystem} install git+https://github.com/caracal-pipeline/crystalball.git    
 
-    pip${pyv_nonsystem} install codex-africanus[complete]
+#    pip${pyv_nonsystem} install codex-africanus[complete]
 
     # for devlopment purpose does not install once a stable version is in place
     #
     # pip${pyv_nonsystem} install git+https://github.com/hrkloeck/daskmsASTROKIT.git
    
-    pip${pyv_nonsystem} install regions
+#    pip${pyv_nonsystem} install regions
     
-    pip${pyv_nonsystem} install shapely==2.0.6
+#    pip${pyv_nonsystem} install shapely==2.0.6
 
-    pip${pyv_nonsystem} install numpyencoder
+#    pip${pyv_nonsystem} install numpyencoder
 
     # installs pybdsf 
-    pip${pyv_nonsystem} install bdsf[ishell]
+#    pip${pyv_nonsystem} install bdsf[ishell]
 
-    pip${pyv_nonsystem} install git+https://github.com/PaulHancock/Aegean.git
+#    pip${pyv_nonsystem} install git+https://github.com/PaulHancock/Aegean.git
 
     
     # RATT / SARAO additional packages 
     # https://github.com/orgs/ratt-ru/repositories
     #
-    pip${pyv_nonsystem} install ragavi
+#    pip${pyv_nonsystem} install ragavi
 
     # careful this stuff downloads some casatask etc
     #
@@ -434,7 +434,7 @@ From: ubuntu:25.10
     # Montage for
     # https://github.com/Caltech-IPAC/Montage/tree/main/python/MontagePy
     #
-    pip${pyv_nonsystem} install MontagePy
+#    pip${pyv_nonsystem} install MontagePy
 
     #
     # Packages that do not install
@@ -452,29 +452,29 @@ From: ubuntu:25.10
     #
     # the versions are tested for python3.12
     #
-    pip${pyv_nonsystem} install casaconfig==1.4.0
+#    pip${pyv_nonsystem} install casaconfig==1.4.0
     
-    pip${pyv_nonsystem} install casatools==6.7.3.21
+#    pip${pyv_nonsystem} install casatools==6.7.3.21
    
-    pip${pyv_nonsystem} install casatasks==6.7.3.21
+#    pip${pyv_nonsystem} install casatasks==6.7.3.21
     
-    pip${pyv_nonsystem} install casaplotms==2.8.2
+#    pip${pyv_nonsystem} install casaplotms==2.8.2
     
-    pip${pyv_nonsystem} install casaviewer==2.4.4
+#    pip${pyv_nonsystem} install casaviewer==2.4.4
     
-    pip${pyv_nonsystem} install casashell==6.7.3.21
+#    pip${pyv_nonsystem} install casashell==6.7.3.21
     
-    pip${pyv_nonsystem} install casaplotserver==2.0.3
+#    pip${pyv_nonsystem} install casaplotserver==2.0.3
     
-    pip${pyv_nonsystem} install casatestutils==6.7.3.21
+#    pip${pyv_nonsystem} install casatestutils==6.7.3.21
     
-    pip${pyv_nonsystem} install casatablebrowser==0.0.40
+#    pip${pyv_nonsystem} install casatablebrowser==0.0.40
     
-    pip${pyv_nonsystem} install casalogger==1.0.23
+#    pip${pyv_nonsystem} install casalogger==1.0.23
     
-    pip${pyv_nonsystem} install casafeather==0.0.27
+#    pip${pyv_nonsystem} install casafeather==0.0.27
 
-    pip${pyv_nonsystem} install casampi==0.5.9
+#    pip${pyv_nonsystem} install casampi==0.5.9
 
     #
     # ##########
@@ -489,7 +489,7 @@ From: ubuntu:25.10
 
     # Delete some files etc.
     #
-    echo "Cleaning up..."
+#    echo "Cleaning up..."
     
     #   apt-get clean
     #rm -rf /var/lib/apt/lists/*
