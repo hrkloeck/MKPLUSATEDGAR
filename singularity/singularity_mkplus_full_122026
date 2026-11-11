@@ -298,7 +298,9 @@ From: ubuntu:25.10
     # https://github.com/casacore/casacore
     # https://github.com/casacore/casacore/releases
     #
-    export CASACORE_VER=3.8.1
+    # Careful 3.8.1 need c++20 compiler
+    #
+    export CASACORE_VER=3.8.0
     #
     mkdir /external && \
     cd /external && \
@@ -307,7 +309,7 @@ From: ubuntu:25.10
     cd /external/casacore-${CASACORE_VER} && \
     mkdir build && \
     cd build && \
-    cmake .. -DBUILD_TESTING=OFF \
+    cmake ../ -DBUILD_TESTING=OFF \
      -DCMAKE_INSTALL_PREFIX=/opt/meersoft/casacore \
      -DCMAKE_PREFIX_PATH=/usr/local/lib/cmake/Boost-${BO_VERSION} \
      -DUSE_OPENMP=OFF \
@@ -363,14 +365,14 @@ From: ubuntu:25.10
     git checkout v${WSCVERSION} && \
     mkdir build && \
     cd build && \
-    cmake -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
+    cmake ../ -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
        -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore \
        -DTARGET=haswell \
        -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
        -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
        -DPYTHON3_LIBRARY=/opt/nonsystem_python/lib \
        -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-       -Dpybind11_DIR=/opt/venviron/py_venv/lib/python${pyv_nonsystem}/site-packages/pybind11/share/cmake/pybind11 ../ && \
+       -Dpybind11_DIR=/opt/venviron/py_venv/lib/python${pyv_nonsystem}/site-packages/pybind11/share/cmake/pybind11 && \
     make -j $nproc && \
     make install && \
     cd /
