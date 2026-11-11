@@ -29,14 +29,15 @@ From: ubuntu:25.10
 
     #set -e
     
-    # needs tp be set otherwise the intereactive time setting 
+    # needs to be set otherwise the interactive time setting 
     # will ask for input
     #
     export DEBIAN_FRONTEND=noninteractive
 
-    # define the number of processors cores availible
+    # Define the number of processors cores availible
     # -note nproc > 1 does not compile on pc28007
     #  seems to be some umask setting problem
+    #
     # - for Edgar use 16 and also define request_cpus
     #   in the job submission
     #
@@ -47,26 +48,9 @@ From: ubuntu:25.10
     export CC=/usr/bin/gcc-15
     export CXX=/usr/bin/g++-15
 
-    # ##########################################
+
+    # let it start
     #
-    # define the python version to be installed in the virtual environment
-    #
-    # check availible versions: https://www.python.org/ftp/python/
-    #
-    # tested with 3.8.16 will use numpy 1.1
-    # tested with 3.12.4 will use numpy 2.3.5
-    #
-    # define the version to download
-    # (IMPORTANT: CHANGE THIS ALSO IN THE ENVIRONMENT SECTION)
-    #
-    export pyv_downloadversion=3.12.4
-    #
-    # define the python name
-    #
-    export pyv_nonsystem=3.12
-    #
-    # ##########################################
-	
     echo "Setting up the system..."
     
     apt-get update && apt-get install -y -q \
@@ -143,6 +127,23 @@ From: ubuntu:25.10
     # - configure --enable-optimizations --enable-shared will generate dynamic
     #   libraries (.so) instead of (.a) 
     #
+    # define the python version to be installed in the virtual environment
+    #
+    # check availible versions: https://www.python.org/ftp/python/
+    #
+    # tested with 3.8.16 will use numpy 1.1
+    # tested with 3.12.4 will use numpy 2.3.5
+    #
+    # define the version to download
+    #
+    export pyv_downloadversion=3.12.4
+    #
+    # define the python name
+    #
+    export pyv_nonsystem=3.12
+    #
+    #
+
     echo "Installing non system python version"${pyv_nonsystem}
 
     mkdir /opt/nonsystem_python && \
@@ -185,6 +186,9 @@ From: ubuntu:25.10
     export BO_VERSION=1.88.0
     export BO_VERSION_TEXT=1_88_0
     #
+    echo "Installing boost "${BO_VERSION}
+    #
+    #
     export Boost_NO_SYSTEM_PATHS=TRUE
     #
     #
@@ -223,7 +227,7 @@ From: ubuntu:25.10
     # ##########
 
 
-    # -----  Setting up a virtual environment 
+    # -----  Setting up a virtual python environment 
     #
     # setting up a virtual environment
     #  - use virtualenv for this (installed in the system python)
@@ -259,7 +263,6 @@ From: ubuntu:25.10
     # Packages needed for CASACORE and WSCLEAN
     #
     pip${pyv_nonsystem} install numpy pybind11[global]
-
     #
     # ##########
 
@@ -347,24 +350,27 @@ From: ubuntu:25.10
     export WSCVERSION=3.6
     #
     # install for different cpu architecture
-    # -DTARGET_CPU=skylake \ CAUTION EDD NODES ARE VITUAL / AMD and not INTEL
     #
+    # -DTARGET_CPU=skylake \ CAUTION EDD NODES ARE VITUAL / AMD and not INTEL
+    # or 
     # -DPORTABLE=True \
-    # ;/usr/local/lib/cmake/Boost-${BO_VERSION}
+    # or
+    # -DTARGET=haswell \
+    #
     #
     cd / && git clone --recursive https://gitlab.com/aroffringa/wsclean.git && \
     cd wsclean && \
     git checkout v${WSCVERSION} && \
     mkdir build && \
     cd build && \
-    cmake .. -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
+    cmake -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
        -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore \
        -DTARGET=haswell \
        -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
        -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
        -DPYTHON3_LIBRARY=/opt/nonsystem_python/lib \
        -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-       -Dpybind11_DIR=/opt/venviron/py_venv/lib/python${pyv_nonsystem}/site-packages/pybind11/share/cmake/pybind11 && \
+       -Dpybind11_DIR=/opt/venviron/py_venv/lib/python${pyv_nonsystem}/site-packages/pybind11/share/cmake/pybind11 ../ && \
     make -j $nproc && \
     make install && \
     cd /
@@ -382,7 +388,7 @@ From: ubuntu:25.10
     echo "Install astro packages via pip ..."
 
 
-    pip${pyv_nonsystem} install psutil==7.2.0
+#    pip${pyv_nonsystem} install psutil==7.2.0
     
 
     # Install SHADEMS to optain most of the packages needed
