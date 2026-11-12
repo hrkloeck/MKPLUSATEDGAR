@@ -45,7 +45,9 @@ From: ubuntu:25.10
 
     # Define the CC compiler  
     #
+
     export CC=/usr/bin/gcc-15
+    
     export CXX=/usr/bin/g++-15
 
 
@@ -254,7 +256,7 @@ From: ubuntu:25.10
     # Note:
     #     - name it as: py_env 
     #
-    echo "Install packages in the virtual environment ..."
+    echo "Try to install packages in the virtual environment ..."
 
     # General tools to extract the package version
     #
@@ -276,7 +278,7 @@ From: ubuntu:25.10
     # ########## ASTRO PACKAGES FROM SOURCE 
     #
 
-    echo "Install CASACORE ... "
+    echo "Try to install CASACORE ... "
 
     # ----- Install CASACORE
     #
@@ -343,7 +345,7 @@ From: ubuntu:25.10
     # https://gitlab.com/aroffringa/wsclean
     # https://sourceforge.net/p/wsclean/wiki/Installation/
     #
-    echo "Install WSCLEAN ..."
+    echo "Try to install WSCLEAN ..."
     #
     # Define VERSION
     #
@@ -387,7 +389,7 @@ From: ubuntu:25.10
 
     # ----- Install astro packages in the virtual python environment
     #
-    echo "Install astro packages via pip ..."
+    echo "Try to install astro packages via pip ..."
 
 
 #    pip${pyv_nonsystem} install psutil==7.2.0
