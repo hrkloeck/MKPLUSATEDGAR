@@ -41,7 +41,7 @@ From: ubuntu:25.10
     # - for Edgar use 16 and also define request_cpus
     #   in the job submission
     #
-    export nproc=16
+    export nproc=1
 
     # Define the CC compiler  
     #
