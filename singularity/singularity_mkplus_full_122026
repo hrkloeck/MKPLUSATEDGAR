@@ -382,7 +382,7 @@ From: ubuntu:25.10
     #
     # https://gitlab.com/aroffringa/wsclean/-/releases
     #
-    export WSCVERSION=3.7
+    export WSCVERSION=3.8
     #
     # install for different cpu architecture
     #
