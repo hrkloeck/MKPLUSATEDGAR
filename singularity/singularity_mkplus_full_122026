@@ -338,35 +338,35 @@ From: ubuntu:25.10
 
     # IDG gridder 
     #
-    echo "Try to install IDG gridder ..."
+#    echo "Try to install IDG gridder ..."
     #
     # 
-    cd / && \
-    git clone --recursive -j4  https://gitlab.com/astron-idg/idg.git && \
-    cd idg && \
-    mkdir build && cd build && \
-    cmake ../ -DCMAKE_INSTALL_PREFIX=/opt/meersoft/ -DBUILD_WITH_CUDA=OFF && \
-    make -j $nproc && \
-    make install && \
-    cd /
+#    cd / && \
+#    git clone --recursive -j4  https://gitlab.com/astron-idg/idg.git && \
+#    cd idg && \
+#    mkdir build && cd build && \
+#    cmake ../ -DCMAKE_INSTALL_PREFIX=/opt/meersoft/ -DBUILD_WITH_CUDA=OFF && \
+#    make -j $nproc && \
+#    make install && \
+#    cd /
     #
     # ##########
 
     # Install EveryBeam
     #
-    echo "Try to install EveryBeam ..."
+#    echo "Try to install EveryBeam ..."
     # 
     # 
     # https://everybeam.readthedocs.io/en/latest/build-instructions.html
     #
-    cd / && \
-    git clone --recursive -j4 https://git.astron.nl/RD/EveryBeam.git && \
-    cd EveryBeam && \
-    mkdir build && cd build && \
-    cmake ../ -BUILD_WITH_PYTHON -DCMAKE_INSTALL_PREFIX=/opt/meersoft/ && \
-    make -j $nproc && \
-    make install && \
-    cd /
+#    cd / && \
+#    git clone --recursive -j4 https://git.astron.nl/RD/EveryBeam.git && \
+#    cd EveryBeam && \
+#    mkdir build && cd build && \
+#    cmake ../ -BUILD_WITH_PYTHON -DCMAKE_INSTALL_PREFIX=/opt/meersoft/ && \
+#    make -j $nproc && \
+#    make install && \
+#    cd /
     #
     # #######################################################
 
@@ -392,6 +392,10 @@ From: ubuntu:25.10
     # or
     # -DTARGET=haswell \
     #
+    # if including IDG and everybeam
+    #
+    #  -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore;/opt/meersoft/idg;/opt/meersoft/everybeam \
+    #
     #
     cd / && git clone --recursive https://gitlab.com/aroffringa/wsclean.git && \
     cd wsclean && \
@@ -399,7 +403,7 @@ From: ubuntu:25.10
     mkdir build && \
     cd build && \
     cmake ../ -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
-       -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore;/opt/meersoft/idg;/opt/meersoft/everybeam \
+       -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore \
        -DTARGET=haswell \
        -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
        -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
