@@ -264,7 +264,12 @@ From: ubuntu:25.10
 
     # Packages needed for CASACORE and WSCLEAN
     #
-    pip${pyv_nonsystem} install numpy pybind11[global]
+    #
+    # for everybeam one needs 2.5.0
+    # https://git.astron.nl/RD/EveryBeam/-/tree/master/external?ref_type=heads
+    # ASSUME THIS IS THE CASE FOR THE REST OF THE SOFTWARE
+    #
+    pip${pyv_nonsystem} install numpy pybind11[global]==2.5.0
     #
     # ##########
 
@@ -336,37 +341,37 @@ From: ubuntu:25.10
     # ##########
 
 
-    # IDG gridder 
+    # Image domain gridder (IDG) fast GPU gridder 
     #
-#    echo "Try to install IDG gridder ..."
+    #    echo "Try to install IDG gridder ..."
     #
     # 
-#    cd / && \
-#    git clone --recursive -j4  https://gitlab.com/astron-idg/idg.git && \
-#    cd idg && \
-#    mkdir build && cd build && \
-#    cmake ../ -DCMAKE_INSTALL_PREFIX=/opt/meersoft/ -DBUILD_WITH_CUDA=OFF && \
-#    make -j $nproc && \
-#    make install && \
-#    cd /
+    #    cd / && \
+    #    git clone --recursive -j4  https://gitlab.com/astron-idg/idg.git && \
+    #    cd idg && \
+    #    mkdir build && cd build && \
+    #    cmake ../ -DCMAKE_INSTALL_PREFIX=/opt/meersoft/ -DBUILD_WITH_CUDA=OFF && \
+    #    make -j $nproc && \
+    #    make install && \
+    #    cd /
     #
     # ##########
 
     # Install EveryBeam
     #
-#    echo "Try to install EveryBeam ..."
+    echo "Try to install EveryBeam ..."
     # 
     # 
     # https://everybeam.readthedocs.io/en/latest/build-instructions.html
     #
-#    cd / && \
-#    git clone --recursive -j4 https://git.astron.nl/RD/EveryBeam.git && \
-#    cd EveryBeam && \
-#    mkdir build && cd build && \
-#    cmake ../ -BUILD_WITH_PYTHON -DCMAKE_INSTALL_PREFIX=/opt/meersoft/ && \
-#    make -j $nproc && \
-#    make install && \
-#    cd /
+    cd / && \
+    git clone --recursive -j4 https://git.astron.nl/RD/EveryBeam.git && \
+    cd EveryBeam && \
+    mkdir build && cd build && \
+    cmake ../ -BUILD_WITH_PYTHON -DCMAKE_INSTALL_PREFIX=/opt/meersoft/ && \
+    make -j $nproc && \
+    make install && \
+    cd /
     #
     # #######################################################
 
@@ -394,7 +399,7 @@ From: ubuntu:25.10
     #
     # if including IDG and everybeam
     #
-    #  -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore;/opt/meersoft/idg;/opt/meersoft/everybeam \
+    #  -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore;/opt/meersoft/everybeam \
     #
     #
     cd / && git clone --recursive https://gitlab.com/aroffringa/wsclean.git && \
@@ -403,7 +408,7 @@ From: ubuntu:25.10
     mkdir build && \
     cd build && \
     cmake ../ -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
-       -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore \
+       -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore;/opt/meersoft/everybeam \
        -DTARGET=haswell \
        -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
        -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
