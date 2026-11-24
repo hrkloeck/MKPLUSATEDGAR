@@ -341,7 +341,9 @@ From: ubuntu:25.10
     # ##########
 
 
-    # Image domain gridder (IDG) fast GPU gridder 
+    # Image domain gridder (IDG) fast GPU gridder nothing for now
+    #
+    # will fail to install
     #
     #    echo "Try to install IDG gridder ..."
     #
@@ -359,19 +361,21 @@ From: ubuntu:25.10
 
     # Install EveryBeam
     #
-    echo "Try to install EveryBeam ..."
+    # will fail to install
+    #
+    # echo "Try to install EveryBeam ..."
     # 
     # 
     # https://everybeam.readthedocs.io/en/latest/build-instructions.html
     #
-    cd / && \
-    git clone --recursive -j4 https://git.astron.nl/RD/EveryBeam.git && \
-    cd EveryBeam && \
-    mkdir build && cd build && \
-    cmake ../ -BUILD_WITH_PYTHON -DCMAKE_INSTALL_PREFIX=/opt/meersoft/ && \
-    make -j $nproc && \
-    make install && \
-    cd /
+    # cd / && \
+    # git clone --recursive -j4 https://git.astron.nl/RD/EveryBeam.git && \
+    # cd EveryBeam && \
+    # mkdir build && cd build && \
+    # cmake ../ -BUILD_WITH_PYTHON -DCMAKE_INSTALL_PREFIX=/opt/meersoft/ && \
+    # make -j $nproc && \
+    # make install && \
+    # cd /
     #
     # #######################################################
 
@@ -408,7 +412,7 @@ From: ubuntu:25.10
     mkdir build && \
     cd build && \
     cmake ../ -DCMAKE_INSTALL_PREFIX=/opt/meersoft/wsclean \
-       -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore;/opt/meersoft/everybeam \
+       -DCMAKE_PREFIX_PATH=/opt/meersoft/casacore \
        -DTARGET=haswell \
        -DPYTHON3_EXECUTABLE=/opt/nonsystem_python/bin \
        -DPYTHON3_INCLUDE_DIR=/opt/nonsystem_python/include \
@@ -432,24 +436,24 @@ From: ubuntu:25.10
     echo "Try to install astro packages via pip ..."
 
 
-#    pip${pyv_nonsystem} install psutil==7.2.0
+    pip${pyv_nonsystem} install psutil==7.2.0
     
 
     # Install SHADEMS to optain most of the packages needed
     # for the radio software packages
     #
-
     # unfortunately the installation may overwrite some packages 
     # dask framework complains about meta keyword
     # so generate a single shadems container.
-    #
-    # pip${pyv_nonsystem} install shadems
+ 
+   
+    pip${pyv_nonsystem} install shadems
 
-#    pip${pyv_nonsystem} install scipy
+    pip${pyv_nonsystem} install scipy
 
-#    pip${pyv_nonsystem} install git+https://github.com/ratt-ru/tricolour.git
+    pip${pyv_nonsystem} install git+https://github.com/ratt-ru/tricolour.git
 
-#    pip${pyv_nonsystem} install git+https://github.com/ska-sa/katbeam.git
+    pip${pyv_nonsystem} install git+https://github.com/ska-sa/katbeam.git
     
 #    pip${pyv_nonsystem} install git+https://github.com/caracal-pipeline/crystalball.git    
 
@@ -459,33 +463,33 @@ From: ubuntu:25.10
     #
     # pip${pyv_nonsystem} install git+https://github.com/hrkloeck/daskmsASTROKIT.git
    
-#    pip${pyv_nonsystem} install regions
+    pip${pyv_nonsystem} install regions
     
-#    pip${pyv_nonsystem} install shapely==2.0.6
+    pip${pyv_nonsystem} install shapely==2.0.6
 
-#    pip${pyv_nonsystem} install numpyencoder
+    pip${pyv_nonsystem} install numpyencoder
 
     # installs pybdsf 
-#    pip${pyv_nonsystem} install bdsf[ishell]
+    pip${pyv_nonsystem} install bdsf[ishell]
 
-#    pip${pyv_nonsystem} install git+https://github.com/PaulHancock/Aegean.git
+    pip${pyv_nonsystem} install git+https://github.com/PaulHancock/Aegean.git
 
     
     # RATT / SARAO additional packages 
     # https://github.com/orgs/ratt-ru/repositories
     #
-#    pip${pyv_nonsystem} install ragavi
+    pip${pyv_nonsystem} install ragavi
 
     # careful this stuff downloads some casatask etc
     #
-#    pip${pyv_nonsystem} install simms
+    # pip${pyv_nonsystem} install "simms>=3.0"
     
 #    pip${pyv_nonsystem} install git+https://github.com/ratt-ru/CubiCal.git
     
     # Montage for
     # https://github.com/Caltech-IPAC/Montage/tree/main/python/MontagePy
     #
-#    pip${pyv_nonsystem} install MontagePy
+    pip${pyv_nonsystem} install MontagePy
 
     #
     # Packages that do not install
@@ -503,29 +507,29 @@ From: ubuntu:25.10
     #
     # the versions are tested for python3.12
     #
-#    pip${pyv_nonsystem} install casaconfig==1.4.0
+    pip${pyv_nonsystem} install casaconfig==1.4.0
     
-#    pip${pyv_nonsystem} install casatools==6.7.3.21
+    pip${pyv_nonsystem} install casatools==6.7.3.21
    
-#    pip${pyv_nonsystem} install casatasks==6.7.3.21
+    pip${pyv_nonsystem} install casatasks==6.7.3.21
     
-#    pip${pyv_nonsystem} install casaplotms==2.8.2
+    pip${pyv_nonsystem} install casaplotms==2.8.2
     
-#    pip${pyv_nonsystem} install casaviewer==2.4.4
+    pip${pyv_nonsystem} install casaviewer==2.4.4
     
-#    pip${pyv_nonsystem} install casashell==6.7.3.21
+    pip${pyv_nonsystem} install casashell==6.7.3.21
     
-#    pip${pyv_nonsystem} install casaplotserver==2.0.3
+    pip${pyv_nonsystem} install casaplotserver==2.0.3
     
-#    pip${pyv_nonsystem} install casatestutils==6.7.3.21
+    pip${pyv_nonsystem} install casatestutils==6.7.3.21
     
-#    pip${pyv_nonsystem} install casatablebrowser==0.0.40
+    pip${pyv_nonsystem} install casatablebrowser==0.0.40
     
-#    pip${pyv_nonsystem} install casalogger==1.0.23
+    pip${pyv_nonsystem} install casalogger==1.0.23
     
-#    pip${pyv_nonsystem} install casafeather==0.0.27
+    pip${pyv_nonsystem} install casafeather==0.0.27
 
-#    pip${pyv_nonsystem} install casampi==0.5.9
+    pip${pyv_nonsystem} install casampi==0.5.9
 
     #
     # ##########
