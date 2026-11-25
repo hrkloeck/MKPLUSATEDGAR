@@ -265,11 +265,7 @@ From: ubuntu:25.10
     # Packages needed for CASACORE and WSCLEAN
     #
     #
-    # for everybeam one needs 2.5.0
-    # https://git.astron.nl/RD/EveryBeam/-/tree/master/external?ref_type=heads
-    # ASSUME THIS IS THE CASE FOR THE REST OF THE SOFTWARE
-    #
-    pip${pyv_nonsystem} install numpy pybind11[global]==2.5.0
+    pip${pyv_nonsystem} install numpy pybind11[global]
     #
     # ##########
 
