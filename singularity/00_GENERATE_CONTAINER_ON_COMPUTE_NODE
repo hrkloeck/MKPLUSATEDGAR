@@ -3,9 +3,14 @@
 # HRK MPIfR 2026
 #
 #
+SCRIPT_EXT="full_122026"
+#
+# -------------------------------------------------------
 #
 mkdir my_SING_BUILD
 cd my_SING_BUILD
+#
+# Safeguard not to be limited by the system scratch size
 #
 mkdir tmp_sing
 export APPTAINER_TMPDIR=${PWD}/tmp_sing
@@ -14,4 +19,4 @@ git clone https://github.com/hrkloeck/MKPLUSATEDGAR.git
 #
 cd MKPLUSATEDGAR/singularity
 #
-singularity build --fakeroot MKPLUSATEDGAR.simg singularity_mkplus_full_122026
+singularity build --fakeroot MKPLUSATEDGAR_${SCRIPT_EXT}.simg singularity_mkplus_${SCRIPT_EXT}

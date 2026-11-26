@@ -3,7 +3,7 @@ From: ubuntu:25.10
 
 %labels
     Author Hans-Rainer Kloeckner (MPIfR)
-    Version v04.2026
+    Version vQ4.2026
     Description "Ubuntu 25 virtualenv and radio astro stuff"
 
 %environment
@@ -339,7 +339,7 @@ From: ubuntu:25.10
 
     # Image domain gridder (IDG) fast GPU gridder nothing for now
     #
-    # will fail to install
+    # this  installation will fail 
     #
     #    echo "Try to install IDG gridder ..."
     #
@@ -357,7 +357,7 @@ From: ubuntu:25.10
 
     # Install EveryBeam
     #
-    # will fail to install
+    # this installation will fail 
     #
     # echo "Try to install EveryBeam ..."
     # 
@@ -442,7 +442,6 @@ From: ubuntu:25.10
     # dask framework complains about meta keyword
     # so generate a single shadems container.
  
-   
     pip${pyv_nonsystem} install shadems
 
     pip${pyv_nonsystem} install scipy
@@ -451,13 +450,9 @@ From: ubuntu:25.10
 
     pip${pyv_nonsystem} install git+https://github.com/ska-sa/katbeam.git
     
-#    pip${pyv_nonsystem} install git+https://github.com/caracal-pipeline/crystalball.git    
+    pip${pyv_nonsystem} install git+https://github.com/caracal-pipeline/crystalball.git    
 
-#    pip${pyv_nonsystem} install codex-africanus[complete]
-
-    # for devlopment purpose does not install once a stable version is in place
-    #
-    # pip${pyv_nonsystem} install git+https://github.com/hrkloeck/daskmsASTROKIT.git
+    pip${pyv_nonsystem} install codex-africanus[complete]
    
     pip${pyv_nonsystem} install regions
     
@@ -465,9 +460,11 @@ From: ubuntu:25.10
 
     pip${pyv_nonsystem} install numpyencoder
 
-    # installs pybdsf 
+
+    # installs pybdsf  (source finder)
     pip${pyv_nonsystem} install bdsf[ishell]
 
+    # install Aegean (source finder)
     pip${pyv_nonsystem} install git+https://github.com/PaulHancock/Aegean.git
 
     
@@ -480,15 +477,17 @@ From: ubuntu:25.10
     #
     # pip${pyv_nonsystem} install "simms>=3.0"
     
-#    pip${pyv_nonsystem} install git+https://github.com/ratt-ru/CubiCal.git
+
+    pip${pyv_nonsystem} install git+https://github.com/ratt-ru/CubiCal.git
     
     # Montage for
     # https://github.com/Caltech-IPAC/Montage/tree/main/python/MontagePy
     #
     pip${pyv_nonsystem} install MontagePy
 
+    # ##########
     #
-    # Packages that do not install
+    # Packages that does not install
     #
     # -  pip${pyv_nonsystem} install git+https://github.com/ska-sa/katsdpcal.git
     #    This package needs python 2.7
@@ -540,13 +539,13 @@ From: ubuntu:25.10
 
     # Delete some files etc.
     #
-#    echo "Cleaning up..."
+    echo "Cleaning up..."
     
     #   apt-get clean
-    #rm -rf /var/lib/apt/lists/*
-    #rm -rf /opt/nonsystem_python_build
-    #rm -fr /wsclean
-    #rm -fr /opt/meersoft/LSM/katsdpcal
-    #rm -fr /boost_${BO_VERSION_TEXT}.tar.bz2
-    #rm -fr /boost_${BO_VERSION_TEXT}
-    #rm -fr /external/casacore*
+    rm -rf /var/lib/apt/lists/*
+    rm -rf /opt/nonsystem_python_build
+    rm -fr /wsclean
+    rm -fr /opt/meersoft/LSM/katsdpcal
+    rm -fr /boost_${BO_VERSION_TEXT}.tar.bz2
+    rm -fr /boost_${BO_VERSION_TEXT}
+    rm -fr /external/casacore*
