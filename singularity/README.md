@@ -59,9 +59,10 @@ Notes:
 The packages pipdeptree and pipgrip has been installed to check the
 installed packages and dependencies or to explore package dependencies.
 
-- To visualise images the following packages have been installed: 
+- To visualise images or fits the following packages have been installed: 
 
-	[eog](https://help.ubuntu.com/community/EyeofGNOME) and [feh](https://manpages.ubuntu.com/manpages/jammy/man1/feh.1.html)
+	[ds9](https://sites.google.com/cfa.harvard.edu/saoimageds9/home)
+    and [eog](https://help.ubuntu.com/community/EyeofGNOME) and [feh](https://manpages.ubuntu.com/manpages/jammy/man1/feh.1.html)
 
 - to checkout the installed python packages use: 
 
