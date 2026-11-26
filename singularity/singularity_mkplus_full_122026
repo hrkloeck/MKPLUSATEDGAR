@@ -449,8 +449,10 @@ From: ubuntu:25.10
     pip${pyv_nonsystem} install git+https://github.com/ratt-ru/tricolour.git
 
     pip${pyv_nonsystem} install git+https://github.com/ska-sa/katbeam.git
-    
-    pip${pyv_nonsystem} install git+https://github.com/caracal-pipeline/crystalball.git    
+
+    # needs crystalball 0.4.3 requires psutil<7.0.0,>=6.1.0
+    #
+    # pip${pyv_nonsystem} install git+https://github.com/caracal-pipeline/crystalball.git    
 
     pip${pyv_nonsystem} install codex-africanus[complete]
    
