@@ -476,10 +476,16 @@ From: ubuntu:25.10
     pip${pyv_nonsystem} install ragavi
 
     # careful this stuff downloads some casatask etc
+    # it requires casatask > 6.6
     #
-    # pip${pyv_nonsystem} install "simms>=3.0"
+    pip${pyv_nonsystem} install casaconfig==1.4.0
     
-
+    pip${pyv_nonsystem} install casatools==6.7.3.21
+    
+    pip${pyv_nonsystem} install casatasks==6.7.3.21
+    
+    pip${pyv_nonsystem} install "simms>=3.0"
+    
     pip${pyv_nonsystem} install git+https://github.com/ratt-ru/CubiCal.git
     
     # Montage for
@@ -504,11 +510,11 @@ From: ubuntu:25.10
     #
     # the versions are tested for python3.12
     #
-    pip${pyv_nonsystem} install casaconfig==1.4.0
+    # pip${pyv_nonsystem} install casaconfig==1.4.0
     
-    pip${pyv_nonsystem} install casatools==6.7.3.21
+    # pip${pyv_nonsystem} install casatools==6.7.3.21
    
-    pip${pyv_nonsystem} install casatasks==6.7.3.21
+    # pip${pyv_nonsystem} install casatasks==6.7.3.21
     
     pip${pyv_nonsystem} install casaplotms==2.8.2
     
